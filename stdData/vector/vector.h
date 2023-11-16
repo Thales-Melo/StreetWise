@@ -7,11 +7,7 @@
 
 typedef void* data_type;
 
-typedef struct {
-    data_type *data;
-    int size;
-    int allocated;
-} Vector;
+typedef struct vector Vector;
 
 // Aloca espaço para um elemento do tipo vector e inicializa os seus atributos.
 Vector *vector_construct(); 

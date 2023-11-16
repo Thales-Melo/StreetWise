@@ -16,3 +16,12 @@
 // 8. Adicione o par (V, distância) em "NaoVisitados". Se a distância do par
 // 9. Retorne a estrutura com os caminhos mínimos.
 
+#include "dijkstra.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+Vector *dijkstra_solve(Problem *problem) {
+    bool *Visitados = (bool*)calloc(num_nodes, sizeof(bool));
+    Heap *NaoVisitados = heap_construct();
+    
+}

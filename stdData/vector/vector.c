@@ -5,6 +5,14 @@
 #define VECTOR_STD_SIZE 10
 #define VECTOR_GROWTH_RATE 2
 
+
+struct vector {
+    data_type *data;
+    int size;
+    int allocated;
+};
+
+
 Vector *vector_construct() {
     Vector *v = (Vector*)malloc(sizeof(Vector));
 
