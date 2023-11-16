@@ -12,6 +12,14 @@ Problem *problem_data_read(char *file) {
     P->graph = graph_construct();
     P->graph->size = size;
     
+    int n_city;
+    float distance;
+    for (int i=0; i<size; i++) {
+        P->graph->metropolis[i] = node_construct();
+    }
+    while (fscanf (F, "%d %f", n_city, distance) == 2) {
+        
+    }
 }
 
 
