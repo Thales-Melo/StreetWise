@@ -1,13 +1,16 @@
 #ifndef _HEAP_H_
 #define _HEAP_H_
 
+
 typedef unsigned char bool;
 typedef void* data_type;
 typedef struct Heap Heap;
 typedef struct HeapNode HeapNode;
 
+
 #define HEAP_INITIAL_CAPACITY 10
 #define HEAP_GROWTH_RATE 2
+
 
 Heap *heap_construct();
 

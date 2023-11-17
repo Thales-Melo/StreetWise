@@ -110,7 +110,7 @@ void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)
         HeapNode *HN_L = (HeapNode *)vector_get(heap->nodes, left);
         HeapNode *HN_LARG = (HeapNode *)vector_get(heap->nodes, largest);
         
-        if (HN_L->priority - HN_LARG->priority > 0) {
+        if (HN_L->priority - HN_LARG->priority < 0) {
             largest = left;
         }
     }
@@ -119,7 +119,7 @@ void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)
         HeapNode *HN_R = (HeapNode *)vector_get(heap->nodes, right);
         HeapNode *HN_LARG = (HeapNode *)vector_get(heap->nodes, largest);
 
-        if (HN_R->priority - HN_LARG->priority > 0) {
+        if (HN_R->priority - HN_LARG->priority < 0) {
             largest = right;
         }
     }

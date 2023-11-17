@@ -41,7 +41,11 @@ Problem *problem_data_read(char *file) {
     }
 
     // debug
-    // node_disconnect_closest(P->graph->metropolis[0]);
+    node_disconnect_closest(P->graph->metropolis[5]);
+
+    printf ("\n\n_________________\n\n");
+    node_print(P->graph->metropolis[5], route_print);
+    printf ("\n\n_________________\n\n");
 
     fclose(F);
 
