@@ -29,8 +29,6 @@ void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(da
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
     HN->data = data;
     HN->priority = priority;
-    print_fn(HN->data);
-    // printf ("priority: %.2f\n", *(float*)priority);
     vector_push_back(heap->nodes, HN);
     vector_print(heap->nodes, route_print);
     heap->size++;
