@@ -1,5 +1,6 @@
 #include "node.h"
 #include "../route/route.h"
+#include "../../utils/utils.h"
 
 Node *node_construct () {
     Node *N = (Node*)malloc(sizeof(Node));
@@ -8,15 +9,9 @@ Node *node_construct () {
     return N;
 }
 
-void node_connect(Node *N_1, Node *N_2, int city_num, float distance, int (*cmp_func)(data_type, data_type)) {
+void node_connect(Node *N_1, Node *N_2, int city_num, float distance) {
     Route *R = route_create(N_2, city_num, distance);
-    
-    // printf ("city: %d, distance: %.0f\n", R->city_num, R->distance);
-    heap_push(N_1->routes, R, distance, cmp_func, route_print);
-
-    // printf ("\n\n_________________\n\n");
-    // heap_print(N_1->routes, route_print);
-    // printf ("\n\n_________________\n\n");
+    heap_push(N_1->routes, R, distance);
 }
 
 void node_destroy(Node *node) {
@@ -29,9 +24,13 @@ void node_print(data_type N, void (*print_fn)(data_type)) {
     heap_print(n->routes, print_fn);
 }
 
-void node_disconnect(Node *node, Node *other);
+void node_disconnect_closest(Node *N_1) {
+    Route *R = heap_pop(N_1->routes, floatcmp);
+    route_print(R);
+    route_destroy(R);
+}
 
-int node_is_connected(Node *node, Node *other);
+int node_is_connected(Node *N_1, Node *N_2);
 
-int node_get_weight(Node *node, Node *other);
+int node_get_weight(Node *N_1, Node *N_2);
 

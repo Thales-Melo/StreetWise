@@ -12,13 +12,13 @@ typedef struct{
 
 Node *node_construct();
 
-void node_connect(Node *N_1, Node *N_2, int city_num, float distance, int (*cmp_func)(data_type, data_type));
+void node_connect(Node *N_1, Node *N_2, int city_num, float distance);
 
 void node_destroy(Node *node);
 
 void node_print(data_type N, void (*print_fn)(data_type));
 
-void node_disconnect(Node *N_1, Node *N_2);
+void node_disconnect_closest(Node *N_1);
 
 int node_is_connected(Node *N_1, Node *N_2);
 

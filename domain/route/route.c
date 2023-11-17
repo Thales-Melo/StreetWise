@@ -21,6 +21,6 @@ void route_destroy(data_type R) {
 void route_print(data_type R) {
     HeapNode *h = (HeapNode*)R;
     Route *r = (Route*)getHeapNodeData(h);
-    printf ("city: %d, distance: %.1f\n", r->city_num, r->distance);
-    printf ("priority: %.1f\n", (double)getHeapNodePriority(h));
+    printf ("city: %d, distance: %.1f", r->city_num, r->distance);
+    printf (" priority: %.1f\n", (double)getHeapNodePriority(h));
 }

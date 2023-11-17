@@ -26,7 +26,7 @@ Heap *heap_construct() {
 }
 
 #include "../../domain/route/route.h"
-void heap_push(Heap *heap, data_type data, double priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type)) {
+void heap_push(Heap *heap, data_type data, double priority) {
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
 
     HN->data = data;
@@ -36,7 +36,7 @@ void heap_push(Heap *heap, data_type data, double priority, int(*cmp_func)(data_
     // TO PRINTANDO AQUI (DEBUG)
     // vector_print(heap->nodes, route_print);
     heap->size++;
-    heap_heapify_up(heap, heap->size-1, cmp_func);
+    heap_heapify_up(heap, heap->size-1);
     if (heap->size == heap->capacity) {
         heap->capacity *= HEAP_GROWTH_RATE;
     }
@@ -85,18 +85,18 @@ void heap_destroy(Heap *heap, void(*free_func)(data_type)) {
     free(heap);
 }
 
-void heap_heapify_up(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)) {
+void heap_heapify_up(Heap *heap, int idx) {
     int parent = (idx - 1)/2;
     HeapNode *HN_1 = vector_get(heap->nodes, parent);
     HeapNode *HN_2 = vector_get(heap->nodes, idx);
 
-    printf ("parent: %d, idx: %d\n", parent, idx);
+    // printf ("parent: %d, idx: %d\n", parent, idx);
     // printf ("cmp_func = %d\n", cmp_func(HN_2->priority, HN_1->priority));
 
     if ((parent >= 0) && (HN_2->priority - HN_1->priority < 0)) {
         swap_nodes(heap, idx, parent);
-        printf ("ENTROU NO HEAP_HEAPIFY_UP\n");
-        heap_heapify_up(heap, parent, cmp_func);
+        // printf ("ENTROU NO HEAP_HEAPIFY_UP\n");
+        heap_heapify_up(heap, parent);
     }
 }
 
