@@ -11,13 +11,13 @@ typedef struct HeapNode HeapNode;
 
 Heap *heap_construct();
 
-void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type));
+void heap_push(Heap *heap, data_type data, double priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type));
 
 bool heap_empty(Heap *heap);
 
 data_type heap_max(Heap *heap);
 
-data_type heap_max_priority(Heap *heap);
+double heap_max_priority(Heap *heap);
 
 data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type));
 
@@ -36,5 +36,7 @@ void heapNode_print(data_type data);
 void heapNode_destroy(data_type data);
 
 data_type getHeapNodeData(HeapNode *HN);
+
+double getHeapNodePriority(HeapNode *HN);
 
 #endif

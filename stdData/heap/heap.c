@@ -5,7 +5,7 @@
 
 struct HeapNode {
     data_type data;
-    data_type priority;
+    double priority;
 };
 
 struct Heap {
@@ -24,11 +24,14 @@ Heap *heap_construct() {
 
     return heap;
 }
+
 #include "../../domain/route/route.h"
-void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type)) {
+void heap_push(Heap *heap, data_type data, double priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type)) {
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
+
     HN->data = data;
     HN->priority = priority;
+    // printf ("priority: %.0f\n\n", *(float*)HN->priority);
     vector_push_back(heap->nodes, HN);
     // TO PRINTANDO AQUI (DEBUG)
     // vector_print(heap->nodes, route_print);
@@ -52,7 +55,7 @@ data_type heap_max(Heap *heap) {
     return vector_get(heap->nodes, 0);
 } // O(1)
 
-data_type heap_max_priority(Heap *heap) {
+double heap_max_priority(Heap *heap) {
     HeapNode *aux = (HeapNode*)vector_get(heap->nodes, 0);
     return aux->priority;
 } // O(1)
@@ -86,9 +89,11 @@ void heap_heapify_up(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)) 
     int parent = (idx - 1)/2;
     HeapNode *HN_1 = vector_get(heap->nodes, parent);
     HeapNode *HN_2 = vector_get(heap->nodes, idx);
+
     printf ("parent: %d, idx: %d\n", parent, idx);
-    printf ("cmp_func = %d\n", cmp_func(HN_2->priority, HN_1->priority));
-    if ((parent >= 0) && (cmp_func(HN_2->priority, HN_1->priority) > 0)) {
+    // printf ("cmp_func = %d\n", cmp_func(HN_2->priority, HN_1->priority));
+
+    if ((parent >= 0) && (HN_2->priority - HN_1->priority < 0)) {
         swap_nodes(heap, idx, parent);
         printf ("ENTROU NO HEAP_HEAPIFY_UP\n");
         heap_heapify_up(heap, parent, cmp_func);
@@ -105,7 +110,7 @@ void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)
         HeapNode *HN_L = (HeapNode *)vector_get(heap->nodes, left);
         HeapNode *HN_LARG = (HeapNode *)vector_get(heap->nodes, largest);
         
-        if (cmp_func(HN_L->priority, HN_LARG->priority) > 0) {
+        if (HN_L->priority - HN_LARG->priority > 0) {
             largest = left;
         }
     }
@@ -114,7 +119,7 @@ void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)
         HeapNode *HN_R = (HeapNode *)vector_get(heap->nodes, right);
         HeapNode *HN_LARG = (HeapNode *)vector_get(heap->nodes, largest);
 
-        if (cmp_func(HN_R->priority, HN_LARG->priority) > 0) {
+        if (HN_R->priority - HN_LARG->priority > 0) {
             largest = right;
         }
     }
@@ -138,8 +143,8 @@ void heap_print(Heap *heap, void(*print_func)(data_type)) {
 
 void heapNode_print(data_type data) {
     HeapNode *aux = (HeapNode*)data;
-    double priority = *(double*)aux->priority;
-    printf("%s - %.2f\n", (char*)aux->data, priority);
+
+    printf("%s - %.2f\n", (char*)aux->data, aux->priority);
 }
 
 void heapNode_destroy(data_type data) {
@@ -149,4 +154,8 @@ void heapNode_destroy(data_type data) {
 
 data_type getHeapNodeData(HeapNode *HN) {
     return HN->data;
+}
+
+double getHeapNodePriority(HeapNode *HN) {
+    return HN->priority;
 }
