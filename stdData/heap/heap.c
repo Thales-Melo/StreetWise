@@ -24,15 +24,15 @@ Heap *heap_construct() {
 
     return heap;
 }
-
+#include "../../domain/route/route.h"
 void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type)) {
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
     HN->data = data;
     HN->priority = priority;
-    print_fn(data);
-    printf ("priority: %.2f\n", *(float*)priority);
+    print_fn(HN->data);
+    // printf ("priority: %.2f\n", *(float*)priority);
     vector_push_back(heap->nodes, HN);
-    
+    vector_print(heap->nodes, route_print);
     heap->size++;
     heap_heapify_up(heap, heap->size-1, cmp_func);
     if (heap->size == heap->capacity) {
@@ -144,4 +144,8 @@ void heapNode_print(data_type data) {
 void heapNode_destroy(data_type data) {
     HeapNode *aux = (HeapNode*)data;
     free(aux);
+}
+
+data_type getHeapNodeData(HeapNode *HN) {
+    return HN->data;
 }

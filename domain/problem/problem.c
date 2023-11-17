@@ -22,7 +22,7 @@ Problem *problem_data_read(char *file) {
         // printf("%d %.0f ", n_city, distance);
         node_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], n_city, distance, floatcmp);
         if (getc(F) == '\n') {
-            printf ("count: %d\n", count);
+            // printf ("count: %d\n", count);
             count++;
         }
         if (count == size) {
@@ -30,7 +30,7 @@ Problem *problem_data_read(char *file) {
         }
     }
 
-    printf ("count: %d\n", count);
+    // printf ("count: %d\n", count);
     
     printf ("\n\n_________________\n\n");
 

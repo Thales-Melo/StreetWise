@@ -54,3 +54,6 @@ dkms.conf
 #executavel
 .exe
 main
+
+#vscode
+.vscode

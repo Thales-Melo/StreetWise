@@ -1,4 +1,5 @@
 #include "route.h"
+#include "../../stdData/heap/heap.h"
 
 Route *route_create(Node *city, int city_num, float distance) {
     Route *R = malloc(sizeof(Route));
@@ -6,7 +7,7 @@ Route *route_create(Node *city, int city_num, float distance) {
     R->city = city;
     R->city_num = city_num;
     R->distance = distance;
-    
+
     return R;
 }
 
@@ -16,7 +17,9 @@ void route_destroy(data_type R) {
     free(r);
 }
 
+// DESCOBRI O PROBLEMA... EU PRECISAVA DE UM HEAPNODE PRA PODER USAR O ROUTE EM CIMA DO HEAPNODE->DATA 
 void route_print(data_type R) {
-    Route *r = (Route*)R;
+    HeapNode *h = (HeapNode*)R;
+    Route *r = (Route*)getHeapNodeData(h);
     printf ("city: %d, distance: %.1f\n", r->city_num, r->distance);
 }

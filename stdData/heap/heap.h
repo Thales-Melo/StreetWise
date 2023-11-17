@@ -35,4 +35,6 @@ void heapNode_print(data_type data);
 
 void heapNode_destroy(data_type data);
 
+data_type getHeapNodeData(HeapNode *HN);
+
 #endif
