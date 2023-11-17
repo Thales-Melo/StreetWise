@@ -7,16 +7,17 @@
 #include "domain/dijkstra/dijkstra.h"
 #include "domain/path/path.h"
 
-// void print_and_destroy_paths(Vector *paths)
-// {
-//     for (int i = 0; i < vector_size(paths); i++)
-//     {
-//         // Path *path = vector_get(paths, i);
-//         // path_print(path);
-//         // path_destroy(path);
-//     }
-//     // vector_destroy(paths);
-// }
+void print_and_destroy_paths(Vector *paths)
+{
+    for (int i = 0; i < vector_size(paths); i++)
+    {
+        Path *path = (Path*)vector_get(paths, i);
+        path_print(path);
+        path_destroy(path);
+    }
+    vector_destroy(paths, NULL);
+}
+
 
 int main() {
     logo();

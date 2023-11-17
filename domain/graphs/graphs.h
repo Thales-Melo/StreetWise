@@ -2,11 +2,11 @@
 #define _GRAPHS_H_
 
 #include <stdio.h>
-#include "../node/node.h"
+#include "../node/city.h"
 
 typedef struct {
     int size;
-    Node **metropolis;
+    City **metropolis;
 } Graph;
 
 Graph *graph_construct (int size);

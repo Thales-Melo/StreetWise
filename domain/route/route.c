@@ -1,7 +1,7 @@
 #include "route.h"
 #include "../../stdData/heap/heap.h"
 
-Route *route_create(Node *city, int city_num, float distance) {
+Route *route_create(City *city, int city_num, float distance) {
     Route *R = malloc(sizeof(Route));
     
     R->city = city;

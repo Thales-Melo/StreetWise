@@ -20,7 +20,7 @@ Problem *problem_data_read(char *file) {
 
     while (fscanf(F, "%d %f", &n_city, &distance) == 2) {
         // printf("%d %.0f ", n_city, distance);
-        node_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], n_city, distance);
+        city_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], n_city, distance);
         if (getc(F) == '\n') {
             // printf ("count: %d\n", count);
             count++;
@@ -36,15 +36,15 @@ Problem *problem_data_read(char *file) {
 
     for (int i=0; i<size; i++) {
         printf ("CITY %d\n", i);
-        node_print(P->graph->metropolis[i], route_print);
+        city_print(P->graph->metropolis[i], route_print);
         printf ("\n\n_________________\n\n");
     }
 
     // debug
-    node_disconnect_closest(P->graph->metropolis[5]);
+    city_disconnect_closest(P->graph->metropolis[5]);
 
     printf ("\n\n_________________\n\n");
-    node_print(P->graph->metropolis[5], route_print);
+    city_print(P->graph->metropolis[5], route_print);
     printf ("\n\n_________________\n\n");
 
     fclose(F);

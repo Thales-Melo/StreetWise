@@ -20,8 +20,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Vector *dijkstra_solve(Problem *problem) {
-    // bool *Visitados = (bool*)calloc(num_nodes, sizeof(bool));
-    // Heap *NaoVisitados = heap_construct();
+Vector *dijkstra_solve(Problem *P) {
+    bool *Visitados = (bool*)calloc(P->graph->size, sizeof(bool));
+
+    Heap *NaoVisitados = heap_construct();
+    heap_push(NaoVisitados, P->graph->metropolis[0], 0);
+
+    free(Visitados);
     
-// }
+    return NULL;
+}
