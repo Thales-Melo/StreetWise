@@ -159,3 +159,7 @@ data_type getHeapNodeData(HeapNode *HN) {
 double getHeapNodePriority(HeapNode *HN) {
     return HN->priority;
 }
+
+data_type heap_get(Heap *heap, int idx) {
+    return vector_get(heap->nodes, idx);
+}

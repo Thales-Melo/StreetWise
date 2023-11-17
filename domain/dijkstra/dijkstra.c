@@ -21,12 +21,13 @@
 #include <stdlib.h>
 
 Vector *dijkstra_solve(Problem *P) {
-    bool *Visitados = (bool*)calloc(P->graph->size, sizeof(bool));
 
-    Heap *NaoVisitados = heap_construct();
-    heap_push(NaoVisitados, P->graph->metropolis[0], 0);
+    // bool *Visitados = (bool*)calloc(P->graph->size, sizeof(bool));
+    // Heap *NaoVisitados = heap_construct();
 
-    free(Visitados);
+    // heap_push(NaoVisitados, P->graph->metropolis[0], 0);
+
+    
     
     return NULL;
 }

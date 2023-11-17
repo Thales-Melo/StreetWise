@@ -22,10 +22,10 @@ void print_and_destroy_paths(Vector *paths)
 int main() {
     logo();
     Problem *problem_data = problem_data_read("file/input.txt");
-//     // Vector *paths = djikstra_solve(problem_data);
+    Vector *paths = dijkstra_solve(problem_data);
 
-//     // print_and_destroy_paths(paths);
-
+    // print_and_destroy_paths(paths);
+    
     problem_data_destroy(problem_data);
 
     return 0;

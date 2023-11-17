@@ -7,7 +7,9 @@
 
 typedef struct{
     Heap *routes;
+    int n_neighbors;
     float distance_to_start;
+    int id;
 } City;
 
 
@@ -21,9 +23,12 @@ void city_print(data_type N, void (*print_fn)(data_type));
 
 void city_disconnect_closest(City *N_1);
 
-int city_is_connected(City *N_1, City *N_2);
+City *city_get_neighbor(City *N, int city_num);
 
-int city_get_weight(City *N_1, City *N_2);
+int city_get_id(City *N);
 
+float city_get_distance(City *N_1, int city_num);
+
+int city_get_neighboors_size(City *N);
 
 #endif
