@@ -12,6 +12,8 @@ typedef struct {
 
 Route *route_create(Node *city, int city_num, float distance);
 
-void route_destroy(Route *r);
+void route_destroy(data_type R);
+
+void route_print(data_type R);
 
 #endif

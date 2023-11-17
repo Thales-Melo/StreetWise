@@ -11,7 +11,7 @@ typedef struct HeapNode HeapNode;
 
 Heap *heap_construct();
 
-void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type));
+void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type));
 
 bool heap_empty(Heap *heap);
 

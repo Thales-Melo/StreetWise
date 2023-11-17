@@ -2,24 +2,26 @@
 #include "../route/route.h"
 
 Node *node_construct () {
-    Node *N = malloc(sizeof(Node));
-    N->connections = heap_construct();
-
+    Node *N = (Node*)malloc(sizeof(Node));
+    N->routes = heap_construct();
+    
     return N;
 }
 
 void node_connect(Node *N_1, Node *N_2, int city_num, float distance, int (*cmp_func)(data_type, data_type)) {
-    int city_num;
-    float distance;
-
-    route *R = route_create(N_2, city_num, distance);
-    
-    heap_push(N_1->routes, R, distance, cmp_func);
+    Route *R = route_create(N_2, city_num, distance);
+    // printf ("city: %d, distance: %.0f\n", R->city_num, R->distance);
+    heap_push(N_1->routes, R, &distance, cmp_func, route_print);
 }
 
 void node_destroy(Node *node) {
-    heap_destroy(node->connections, NULL);
+    heap_destroy(node->routes, route_destroy);
     free(node);
+}
+
+void node_print(data_type N, void (*print_fn)(data_type)) {
+    Node *n = (Node*)N;
+    heap_print(n->routes, print_fn);
 }
 
 void node_disconnect(Node *node, Node *other);

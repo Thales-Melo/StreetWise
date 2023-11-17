@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wno-unused-result -g
 
-SRCS = main.c stdData/heap/heap.c stdData/vector/vector.c domain/dijkstra/dijkstra.c domain/graphs/graphs.c domain/path/path.c domain/problem/problem.c view/view.c utils/utils.c
+SRCS = main.c stdData/heap/heap.c stdData/vector/vector.c domain/dijkstra/dijkstra.c domain/graphs/graphs.c domain/path/path.c domain/node/node.c domain/route/route.c domain/problem/problem.c view/view.c utils/utils.c
 OBJS = $(SRCS:.c=.o)
 
 all: main

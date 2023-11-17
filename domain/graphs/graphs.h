@@ -2,6 +2,7 @@
 #define _GRAPHS_H_
 
 #include <stdio.h>
+#include "../node/node.h"
 
 typedef struct {
     int size;
@@ -10,6 +11,6 @@ typedef struct {
 
 Graph *graph_construct (int size);
 
-void graph_destroy (graph *graph);
+void graph_destroy (Graph *graph);
 
 #endif

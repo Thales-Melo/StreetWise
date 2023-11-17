@@ -25,11 +25,12 @@ Heap *heap_construct() {
     return heap;
 }
 
-void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type)) {
+void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(data_type, data_type), void(*print_fn)(data_type)) {
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
     HN->data = data;
     HN->priority = priority;
-
+    print_fn(data);
+    printf ("priority: %.2f\n", *(float*)priority);
     vector_push_back(heap->nodes, HN);
     
     heap->size++;

@@ -16,6 +16,8 @@ void node_connect(Node *N_1, Node *N_2, int city_num, float distance, int (*cmp_
 
 void node_destroy(Node *node);
 
+void node_print(data_type N, void (*print_fn)(data_type));
+
 void node_disconnect(Node *node, Node *other);
 
 int node_is_connected(Node *node, Node *other);
