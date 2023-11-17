@@ -77,6 +77,7 @@ int intcmp(data_type A, data_type B) {
 int floatcmp(data_type A, data_type B) {
   float a = *(float*)A;
   float b = *(float*)B;
+  printf ("a: %.0f, b: %.0f\n", a, b);
   if (a>b) {
     return 1;
   }

@@ -30,7 +30,8 @@ void heap_push(Heap *heap, data_type data, data_type priority, int(*cmp_func)(da
     HN->data = data;
     HN->priority = priority;
     vector_push_back(heap->nodes, HN);
-    vector_print(heap->nodes, route_print);
+    // TO PRINTANDO AQUI (DEBUG)
+    // vector_print(heap->nodes, route_print);
     heap->size++;
     heap_heapify_up(heap, heap->size-1, cmp_func);
     if (heap->size == heap->capacity) {
@@ -85,9 +86,11 @@ void heap_heapify_up(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)) 
     int parent = (idx - 1)/2;
     HeapNode *HN_1 = vector_get(heap->nodes, parent);
     HeapNode *HN_2 = vector_get(heap->nodes, idx);
-    
+    printf ("parent: %d, idx: %d\n", parent, idx);
+    printf ("cmp_func = %d\n", cmp_func(HN_2->priority, HN_1->priority));
     if ((parent >= 0) && (cmp_func(HN_2->priority, HN_1->priority) > 0)) {
         swap_nodes(heap, idx, parent);
+        printf ("ENTROU NO HEAP_HEAPIFY_UP\n");
         heap_heapify_up(heap, parent, cmp_func);
     }
 }

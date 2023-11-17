@@ -28,13 +28,18 @@ Problem *problem_data_read(char *file) {
         if (count == size) {
             break;
         }
+
     }
 
     // printf ("count: %d\n", count);
     
     printf ("\n\n_________________\n\n");
 
-    node_print(P->graph->metropolis[0], route_print);
+    for (int i=0; i<size; i++) {
+        printf ("CITY %d\n", i);
+        node_print(P->graph->metropolis[i], route_print);
+        printf ("\n\n_________________\n\n");
+    }
 
     fclose(F);
 
