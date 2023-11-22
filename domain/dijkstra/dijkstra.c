@@ -19,15 +19,43 @@
 #include "dijkstra.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../../utils/utils.h"
+#include "../node/city.h"
+#include "../route/route.h"
+#include "../path/path.h"
+
 
 Vector *dijkstra_solve(Problem *P) {
 
-    // bool *Visitados = (bool*)calloc(P->graph->size, sizeof(bool));
-    // Heap *NaoVisitados = heap_construct();
+    Vector *paths = vector_construct();
+    // Path *paths = path_construct(P->graph->size);
+    
+    bool *Visited = (bool*)calloc(P->graph->size, sizeof(bool));
+    Heap *NotVisited = heap_construct();
 
-    // heap_push(NaoVisitados, P->graph->metropolis[0], 0);
+    P->graph->metropolis[0]->distance_to_start = 0;
+    heap_push(NotVisited, P->graph->metropolis[0], 0);
+
+    // vector_push_back(path)
+    // path_add(paths, 0);
+
+    while (!heap_empty(NotVisited)) {
+        City *C = (City*)heap_pop(NotVisited, floatcmp);
+        Visited[C->id] = TRUE;
+
+        for (int i=0; i<C->n_neighbors; i++) {
+            Route *neighboor = (Route*)heap_pop(C->routes, floatcmp);
+            neighboor->city->distance_to_start += neighboor->distance;
+
+            if (Visited[neighboor->city->id] == FALSE) {
+                heap_push(NotVisited, neighboor->city, neighboor->city->distance_to_start);
+            }
+        }
+
+
+    }
+
 
     
-    
-    return NULL;
+    return paths;
 }

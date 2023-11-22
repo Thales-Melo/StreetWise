@@ -17,4 +17,6 @@ void path_destroy(Path *path);
 
 void path_print(Path *path);
 
+void path_add(Path *path, int id);
+
 #endif

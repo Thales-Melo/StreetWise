@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 Path *path_construct() {
-    Path *path = malloc(sizeof(Path));
+    Path *path = (Path*)malloc(sizeof(Path));
     path->route = list_construct();
     path->distance = 0;
     path->start_city = START_CITY;
@@ -21,4 +21,10 @@ void path_print(Path *path) {
     printf ("%.2f\n", path->distance);
 }
 
+// void path_list_print(Path *path) {
+    
+// }
 
+void path_add(Path *path, int id) {
+    list_push_back(path->route, &id);
+}
