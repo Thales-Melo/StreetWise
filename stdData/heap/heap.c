@@ -66,13 +66,14 @@ data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
     }
 
     HeapNode *super_grandparent = vector_get(heap->nodes, 0);
+    
     vector_swap(heap->nodes, 0, heap->size-1);
     vector_pop_back(heap->nodes);
 
     heap->size--;
 
     heap_heapify_down(heap, 0, cmp_func);
-
+   
     return super_grandparent;
 }
 

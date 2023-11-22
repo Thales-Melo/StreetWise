@@ -2,7 +2,7 @@
 #define _HEAP_H_
 
 
-typedef unsigned char bool;
+typedef int bool;
 typedef void* data_type;
 typedef struct Heap Heap;
 typedef struct HeapNode HeapNode;

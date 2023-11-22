@@ -23,6 +23,7 @@
 #include "../node/city.h"
 #include "../route/route.h"
 #include "../path/path.h"
+#include "../parent/parent.h"
 
 
 Vector *dijkstra_solve(Problem *P) {
@@ -32,29 +33,56 @@ Vector *dijkstra_solve(Problem *P) {
     
     bool *Visited = (bool*)calloc(P->graph->size, sizeof(bool));
     Heap *NotVisited = heap_construct();
+    Vector *parents = vector_construct();
 
     P->graph->metropolis[0]->distance_to_start = 0;
-    heap_push(NotVisited, P->graph->metropolis[0], 0);
+    // Inicializa o vetor de não visitados com a origem
+    Parent *origin = parent_construct(0, 0, 0);
+    heap_push(NotVisited, origin, 0);
+    int parent_id = 0;
 
     // vector_push_back(path)
     // path_add(paths, 0);
 
     while (!heap_empty(NotVisited)) {
-        City *C = (City*)heap_pop(NotVisited, floatcmp);
-        Visited[C->id] = TRUE;
+        HeapNode *HN = (HeapNode*)heap_pop(NotVisited, floatcmp);
+        Parent *par = (Parent*)getHeapNodeData(HN);
+        printf ("\n\npar->id: %d\n", par->id);
+        printf ("par->cost: %lf\n", par->cost);
+        printf ("par->parent: %d\n\n", par->parent);
+        City *C = P->graph->metropolis[par->id];
+        printf ("C->id: %d\n", C->id);
+        printf ("C->distance_to_start: %lf\n", C->distance_to_start);
+        printf ("C->n_neighbors: %d\n\n", C->n_neighbors);
+        
+
+        if (Visited[C->id] == FALSE) {
+            Visited[C->id] = TRUE;
+            printf ("parent_id: %d\n", parent_id);
+            printf ("C->id: %d\n", C->id);
+            printf ("C->distance_to_start: %lf\n\n", C->distance_to_start);
+            vector_push_back(parents, parent_construct(parent_id, C->id, C->distance_to_start));
+            // Recupear o heap_max
+        
+        }
 
         for (int i=0; i<C->n_neighbors; i++) {
-            Route *neighboor = (Route*)heap_pop(C->routes, floatcmp);
+            HeapNode *aux = (HeapNode*)heap_pop(C->routes, floatcmp);
+            Route *neighboor = (Route*)getHeapNodeData(aux);
             neighboor->city->distance_to_start += neighboor->distance;
-
             if (Visited[neighboor->city->id] == FALSE) {
-                heap_push(NotVisited, neighboor->city, neighboor->city->distance_to_start);
+                neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
+                heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, neighboor->city->distance_to_start), neighboor->city->distance_to_start);
             }
         }
 
 
     }
 
+
+    for (int i=0; i<P->graph->size; i++) {
+        printf("Parent: %d, id: %d, cost: %lf\n", ((Parent*)vector_get(parents, i))->parent, ((Parent*)vector_get(parents, i))->id, ((Parent*)vector_get(parents, i))->cost);
+    }
 
     
     return paths;

@@ -8,14 +8,6 @@ typedef void* data_type;
 
 void print_int(data_type data);
 
-void print_float(void* data);
-
-void print_string_topics(data_type data);
-
-void viraMaiuscula (char *letra);
-
-char *stringMaiuscula (char *str);
-
 void printNegrito(const char* str);
 
 void printVermelho(const char *str);
