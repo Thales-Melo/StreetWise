@@ -13,6 +13,6 @@ Parent *parent_construct(int parent, int id, float cost);
 
 void parent_print(Parent *par);
 
-void parent_destroy(Parent *par);
+void parent_destroy(void *data);
 
 #endif

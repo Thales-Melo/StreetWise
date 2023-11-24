@@ -15,6 +15,7 @@ void parent_print(Parent *par) {
     printf("Parent: %d, id: %d, cost: %f\n", par->parent, par->id, par->cost);
 }
 
-void parent_destroy(Parent *par) {
+void parent_destroy(void *data) {
+    Parent *par = (Parent*)data;
     free(par);
 }

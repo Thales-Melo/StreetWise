@@ -24,6 +24,11 @@ Vector *vector_construct() {
 }
 
 void vector_destroy(Vector *v, void(*free_func)(data_type)) {
+    if (free_func == NULL) {
+        free(v->data);
+        free(v);
+        return;
+    }
     for (int i=0; i<v->size; i++) {
         if (v->data[i] != NULL) {
             free_func(v->data[i]);

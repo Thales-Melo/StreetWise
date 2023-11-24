@@ -18,7 +18,7 @@ Path *path_construct() {
 }
 
 void path_destroy(Path *path) {
-    list_destroy(path->route, NULL);
+    list_destroy(path->route, free);
     free(path);
 }
 

@@ -16,6 +16,7 @@ void print_and_destroy_paths(Vector *paths)
         path_destroy(path);
     }
     vector_destroy(paths, NULL);
+    printf ("\n\n");
 }
 
 
