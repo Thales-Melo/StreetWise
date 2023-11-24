@@ -18,6 +18,8 @@ void city_connect(City *C_1, City *C_2, int city_num, float distance) {
 }
 
 void city_destroy(City *city) {
+    printf ("CHEGOU AQUI - city\n");
+    printf ("city->routes: %d\n", heap_empty(city->routes));
     heap_destroy(city->routes, route_destroy);
     free(city);
 }

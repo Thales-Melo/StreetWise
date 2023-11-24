@@ -82,6 +82,7 @@ data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
 
 
 void heap_destroy(Heap *heap, void(*free_func)(data_type)) {
+    printf ("CHEGOU AQUI - heap\n");
     vector_destroy(heap->nodes, free_func);
     free(heap);
 }
