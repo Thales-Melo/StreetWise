@@ -4,14 +4,7 @@
 
 #include "../node/node.h"
 
-
-typedef struct
-{
-    Node *head;
-    Node *last;
-    int size;
-} List;
-
+typedef struct List List; 
 
 /**
  * @brief Construct a new double linked list object

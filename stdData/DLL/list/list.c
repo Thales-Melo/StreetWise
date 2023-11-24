@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct List
+{
+    Node *head;
+    Node *last;
+    int size;
+};
+
 List *list_construct() {
     List *l = (List*)malloc(sizeof(List));
     l->head = NULL;
