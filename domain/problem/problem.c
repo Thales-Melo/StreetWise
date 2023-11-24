@@ -41,14 +41,6 @@ Problem *problem_data_read(char *file) {
         // printf ("\n\n_________________\n\n");
     // }
 
-    /////////////////////////////
-
-    // PROBLEMA AQUI AINDA, NAO SEI PORQUE, MAS SEMPRE QUE EU USO
-    // ALEATORIAMENTE ESSE CITY_DISCONNECT, O PROGRAMA FUNCIONA, 
-    // MAS SE EU USAR SEMPRE, ELE NAO FUNCIONA
-
-    /////////////////////////////
-
     // debug
     // city_disconnect_closest(P->graph->metropolis[5]);
 
