@@ -31,10 +31,7 @@ void heap_push(Heap *heap, data_type data, double priority) {
 
     HN->data = data;
     HN->priority = priority;
-    // printf ("priority: %.0f\n\n", *(float*)HN->priority);
     vector_push_back(heap->nodes, HN);
-    // TO PRINTANDO AQUI (DEBUG)
-    // vector_print(heap->nodes, route_print);
     heap->size++;
     heap_heapify_up(heap, heap->size-1);
     if (heap->size == heap->capacity) {
@@ -60,6 +57,7 @@ double heap_max_priority(Heap *heap) {
     return aux->priority;
 } // O(1)
 
+
 data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
     if (heap->size == 0) {
         return NULL;
@@ -78,26 +76,19 @@ data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
 }
 
 
-// Nesta implementação, em vez de usar vector_pop_front, eu substituí o nó raiz pelo último nó e, em seguida, reduzi o tamanho do heap. Em seguida, chamei heap_heapify_down para manter a propriedade de heap. Essa abordagem é eficiente e mantém a complexidade de tempo em O(log N). Certifique-se de ajustar qualquer tratamento de erro ou valor padrão conforme necessário.
-
-
 void heap_destroy(Heap *heap, void(*free_func)(data_type)) {
-    // printf ("CHEGOU AQUI - heap\n");
     vector_destroy(heap->nodes, free_func);
     free(heap);
 }
+
 
 void heap_heapify_up(Heap *heap, int idx) {
     int parent = (idx - 1)/2;
     HeapNode *HN_1 = vector_get(heap->nodes, parent);
     HeapNode *HN_2 = vector_get(heap->nodes, idx);
 
-    // printf ("parent: %d, idx: %d\n", parent, idx);
-    // printf ("cmp_func = %d\n", cmp_func(HN_2->priority, HN_1->priority));
-
     if ((parent >= 0) && (HN_2->priority - HN_1->priority < 0)) {
         swap_nodes(heap, idx, parent);
-        // printf ("ENTROU NO HEAP_HEAPIFY_UP\n");
         heap_heapify_up(heap, parent);
     }
 }
@@ -139,15 +130,18 @@ void swap_nodes(Heap *heap, int idx1, int idx2) {
     vector_set(heap->nodes, idx2, aux);
 }
 
+
 void heap_print(Heap *heap, void(*print_func)(data_type)) {
     vector_print(heap->nodes, print_func);
 }
+
 
 void heapNode_print(data_type data) {
     HeapNode *aux = (HeapNode*)data;
 
     printf("%s - %.2f\n", (char*)aux->data, aux->priority);
 }
+
 
 void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
     HeapNode *aux = (HeapNode*)data;
@@ -157,13 +151,16 @@ void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
     free(aux);
 }
 
+
 data_type getHeapNodeData(HeapNode *HN) {
     return HN->data;
 }
 
+
 double getHeapNodePriority(HeapNode *HN) {
     return HN->priority;
 }
+
 
 data_type heap_get(Heap *heap, int idx) {
     return vector_get(heap->nodes, idx);

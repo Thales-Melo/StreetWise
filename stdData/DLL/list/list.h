@@ -1,8 +1,9 @@
-
 #ifndef _DOUBLE_LINKED_LIST_H_
 #define _DOUBLE_LINKED_LIST_H_
 
+
 #include "../node/node.h"
+
 
 typedef struct
 {
@@ -10,6 +11,7 @@ typedef struct
     Node *last;
     int size;
 } List;
+
 
 /**
  * @brief Construct a new double linked list object
@@ -52,7 +54,7 @@ void list_push_front(List *l, data_type data);
  * @param data
  * data to be stored in the new node.
  */
-void list_push_back(List *l, data_type data, void (*print_fn)(data_type));
+void list_push_back(List *l, data_type data);
 
 /**
  * @brief Print the elements of the double linked list.
@@ -65,7 +67,6 @@ void list_push_back(List *l, data_type data, void (*print_fn)(data_type));
  */
 void list_print(List *l, void (*print_fn)(data_type));
 
-void list_print_reverse(List *l, void (*print_fn)(data_type));
 /**
  * @brief Returns the data stored in the node at the given index.
  * @param l
@@ -99,61 +100,6 @@ data_type list_pop_front(List *l, void (*free_func)(data_type));
 
 data_type list_pop_back(List *l, void (*free_func)(data_type)) ;
 
-/**
- * @brief Create a new list given by the reverse of the given list.
- * @param l
- * Pointer to the double linked list.
- * @return List*
- * Pointer to the newly allocated double linked list.
- */
-List *list_reverse(List *l);
-
-/**
- * @brief Removes all nodes from the double linked list.
- * Removes all nodes from the double linked list and frees the memory allocated for them.
- * @param l
- * Pointer to the double linked list.
- * @note
- * The caller is responsible for freeing the memory allocated for the data stored in the nodes.
- */
-void list_clear(List *l);
-
-/**
- * @brief Removes all nodes with the given value from the double linked list.
- * Removes all nodes with the given value from the double linked list and frees the memory allocated for them.
- * @param l
- * Pointer to the double linked list.
- * @param val
- * Value to be removed from the double linked list.
- */
-void list_remove(List *l, data_type val);
-
-/**
- * @brief Removes all duplicate values from the double linked list.
- * Removes all duplicate values from the double linked list and frees the memory allocated for them.
- * @param l
- * Pointer to the double linked list.
- * @note
- * The double linked list must be sorted.
- */
-void list_unique(List *l);
-
-/**
- * @brief Adds all nodes from the given list to the end of the double linked list.
- * @param l
- * Pointer to the double linked list.
- * @param m
- * Pointer to the double linked list to be added to the end of the double linked list.
- */
-void list_cat(List *l, List *m);
-
-/**
- * @brief Sorts the double linked list.
- * Sorts the double linked list.
- * @param l
- * Pointer to the double linked list.
- */
-void list_sort(List *l);
 
 /**
  * @brief Destroys the double linked list.

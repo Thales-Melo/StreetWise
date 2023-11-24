@@ -1,10 +1,12 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+
 #define TRUE 1
 #define FALSE 0
 
 typedef void* data_type;
+
 
 void print_int(data_type data);
 
@@ -29,5 +31,6 @@ void freeArray(char **lista, int tam);
 int intcmp(data_type A, data_type B);
 
 int floatcmp(data_type A, data_type B);
+
 
 #endif

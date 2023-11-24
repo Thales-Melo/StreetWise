@@ -23,6 +23,7 @@ Vector *vector_construct() {
     return v;
 }
 
+
 void vector_destroy(Vector *v, void(*free_func)(data_type)) {
     if (free_func == NULL) {
         // printf("vector_destroy: free_func is NULL\n");
@@ -40,6 +41,7 @@ void vector_destroy(Vector *v, void(*free_func)(data_type)) {
     free(v);
 }
 
+
 void vector_push_back(Vector *v, data_type val) {
     if (v->size == v->allocated) {
         v->allocated *= VECTOR_GROWTH_RATE;
@@ -49,12 +51,13 @@ void vector_push_back(Vector *v, data_type val) {
     v->size++;
 }
 
+
 int vector_size(Vector *v) {
     return v->size;
 }
 
+
 data_type vector_get(Vector *v, int i) {
-    // Verificar validade do índice (não pode ser negativo e precisa ser menor que o size)
     if ((i >= 0) && i < (v->size)) {
         return v->data[i];
     }
@@ -64,6 +67,7 @@ data_type vector_get(Vector *v, int i) {
         exit(1);
     }
 }
+
 
 void vector_set(Vector *v, int i, data_type val) {
     if ((i >= 0) && i < (v->size)) {
@@ -76,11 +80,9 @@ void vector_set(Vector *v, int i, data_type val) {
     }
 }
 
+
 int vector_find(Vector *v, data_type val, int(*cmp_func)(data_type, data_type)) {
     for (int i=0; i<v->size; i++) {
-        // if (v->data[i] == val) {
-        //    return i;
-        // }
         if (cmp_func(v->data[i], val) == 0) {
             return i;
         }
@@ -94,6 +96,7 @@ int vector_find(Vector *v, data_type val, int(*cmp_func)(data_type, data_type)) 
 // LAB-2
 ///////////////////////////////////////////////////////////////
 
+
 data_type vector_remove(Vector *v, int i) {
     data_type item = v->data[i];
 
@@ -105,6 +108,7 @@ data_type vector_remove(Vector *v, int i) {
     
     return item;
 }
+
 
 data_type vector_pop_front(Vector *v) {
     data_type first = v->data[0];
@@ -119,6 +123,7 @@ data_type vector_pop_front(Vector *v) {
     }
     return first;
 }
+
 
 data_type vector_pop_back(Vector *v) {
     if (v->size == 0) {
@@ -135,6 +140,7 @@ data_type vector_pop_back(Vector *v) {
     return last;
 }
 
+
 void vector_insert(Vector *v, int i, data_type val) {
     if (v->size == v->allocated) {
         v->allocated *= VECTOR_GROWTH_RATE;
@@ -150,19 +156,12 @@ void vector_insert(Vector *v, int i, data_type val) {
     v->data[i] = val;
 }
 
+
 void vector_swap(Vector *v, int i, int j) {
     data_type aux = v->data[i];
     v->data[i] = v->data[j];
     v->data[j] = aux;
 }
-
-/*
-void vector_check_if_realloc (Vector *v) {
-    if (v->size == v->allocated) {
-        v->allocated *= VECTOR_GROWTH_RATE;
-        v->data = (data_type*)realloc(v->data, sizeof(data_type)*v->allocated);
-    }
-}*/
 
 
 void vector_sort (Vector *v) {
@@ -200,23 +199,19 @@ int vector_binary_search(Vector *v, data_type val) {
     return -1;
 }
 
+
 void vector_reverse(Vector *v) {
     for (int i=0; i<v->size/2; i++) {
         vector_swap(v, i, v->size-1-i);
     }
 }
 
+
 void vector_print(Vector *v, void(*print_func)(data_type)) {
     for (int i=0; i<v->size; i++) {
         print_func(v->data[i]);
     }
 }
-
-
-
-
-
-
 
 
 ///////////////////////////////////////////////////////////////

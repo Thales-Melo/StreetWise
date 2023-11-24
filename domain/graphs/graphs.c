@@ -1,4 +1,7 @@
 #include "graphs.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 Graph *graph_construct(int size) {
     Graph *G = malloc(sizeof(Graph));
@@ -10,6 +13,7 @@ Graph *graph_construct(int size) {
     
     return G;
 }
+
 
 void graph_destroy(Graph *graph) {
     for (int i=0; i<graph->size; i++) {

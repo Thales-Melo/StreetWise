@@ -2,7 +2,9 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
+
 typedef void* data_type;
+
 
 typedef struct Node
 {
@@ -11,9 +13,14 @@ typedef struct Node
     struct Node *next;
 } Node;
 
+
 Node *node_construct(data_type value, Node *prev, Node *next);
+
 void node_destroy(Node *n, void (*free_func)(data_type));
+
 void node_print_debug(Node *n, void (*print_fn)(data_type));
+
 void node_print(Node *l, void (*print_fn)(data_type));
+
 
 #endif

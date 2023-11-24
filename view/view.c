@@ -11,6 +11,7 @@ void logo() {
   printf("\n\n\n");
 }
 
+
 void printArquivoNaoExiste(char *filename) {
     char msg_erro[100];
     msg_erro[0] = '\0';
@@ -18,6 +19,7 @@ void printArquivoNaoExiste(char *filename) {
     printAmarelo(msg_erro);
     printf ("\n\n");
 }
+
 
 void printArquivoGerado(char *arquivo) {
   char msg[100];
