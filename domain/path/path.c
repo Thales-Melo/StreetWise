@@ -8,7 +8,6 @@ Path *path_construct() {
     Path *path = (Path*)malloc(sizeof(Path));
     path->route = list_construct();
     path->distance = 0;
-    path->start_city = START_CITY;
     return path;
 }
 
@@ -45,12 +44,13 @@ Vector *path_vector_construct(Problem *P, Vector *parents) {
         Parent *par = (Parent *)vector_get(parents, i);
         path->distance = par->cost;
 
+        // Itera sobre os pais até chegar no nó inicial
         while (par->id != 0) {
             path_add(path, par->id);
             par = (Parent *)vector_get(parents, par->parent);
         }
 
-        path_add(path, START_CITY);
+        path_add(path, START_NODE);
 
         vector_push_back(paths, path);
     }

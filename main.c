@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "view/view.h"
+#include "utils/utils.h"
 #include "stdData/heap/heap.h"
 #include "stdData/vector/vector.h"
 #include "domain/problem/problem.h"
@@ -19,21 +20,25 @@ void print_and_destroy_paths(Vector *paths)
 }
 
 
-int main() {
-    Problem *problem_data = problem_data_read("file/inputs/input.txt");
+int main(int argc, char *argv[]) {
+    char *filename;
+    // Verifica se o usuário forneceu um argumento na linha de comando
+    // Se não, pede o nome do arquivo
+    filename = (argc > 1) ? argv[1] : (char*)malloc(sizeof(char) * STD_FILENAME_SIZE);
+    if (argc <= 1) {
+        scanf("%s", filename);
+    }
+    
+    Problem *problem_data = problem_data_read(filename);
+    filename != argv[1] ? free(filename) : 0;
+
     if (problem_data == NULL) {
         return 0;
     }
-    Vector *paths = dijkstra_solve(problem_data);
 
+    Vector *paths = dijkstra_solve(problem_data);
     print_and_destroy_paths(paths);
-    
     problem_data_destroy(problem_data);
 
     return 0;
 }
-
-//  entry format:
-// 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./main > file/outputs/reality/output.txt
-//  diff format:
-//  diff -w file/outputs/expectation/output.txt file/outputs/reality/output.txt 

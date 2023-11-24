@@ -35,7 +35,7 @@ Problem *problem_data_read(char *file) {
         }
     }
     fclose(F);
-
+    
     return P;
 }
 

@@ -4,6 +4,7 @@
 
 #define TRUE 1
 #define FALSE 0
+#define STD_FILENAME_SIZE 100
 
 typedef void* data_type;
 

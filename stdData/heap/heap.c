@@ -16,16 +16,23 @@ struct Heap {
     int capacity;
 };
 
+////////////////////////////////////////////////
+// Hidden functions from the user of the heap //
+////////////////////////////////////////////////
 
+// Returns the HeapNode's data
 data_type getHeapNodeData(HeapNode *HN) {
     return HN->data;
 }
 
 
+// Returns the HeapNode's priority
 double getHeapNodePriority(HeapNode *HN) {
     return HN->priority;
 }
 
+
+// Destroys a HeapNode
 void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
     HeapNode *aux = (HeapNode*)data;
     if (free_func != NULL) {
@@ -35,6 +42,7 @@ void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
 }
 
 
+// Prints a HeapNode
 void heapNode_print(data_type data) {
     HeapNode *aux = (HeapNode*)data;
 
@@ -42,79 +50,31 @@ void heapNode_print(data_type data) {
 }
 
 
-Heap *heap_construct() {
-    Heap *heap = (Heap*)malloc(sizeof(Heap));
-    
-    heap->nodes = vector_construct();
-    heap->size = 0;
-    heap->capacity = HEAP_INITIAL_CAPACITY;
-
-    return heap;
+/**
+ * @brief Swaps two nodes in the heap
+ * 
+ * @param heap
+ * Pointer to the heap
+ * @param idx1
+ * The index of the first node
+ * @param idx2
+ * The index of the second node
+*/
+void swap_nodes(Heap *heap, int idx1, int idx2) {
+    HeapNode *aux = vector_get(heap->nodes, idx1);
+    vector_set(heap->nodes, idx1, vector_get(heap->nodes, idx2));
+    vector_set(heap->nodes, idx2, aux);
 }
 
 
-void heap_push(Heap *heap, data_type data, double priority) {
-    HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
-
-    HN->data = data;
-    HN->priority = priority;
-    vector_push_back(heap->nodes, HN);
-    heap->size++;
-    heap_heapify_up(heap, heap->size-1);
-    if (heap->size == heap->capacity) {
-        heap->capacity *= HEAP_GROWTH_RATE;
-    }
-}
-
-
-bool heap_empty(Heap *heap) {
-    if (heap->size == 0) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-} // O(1)
-
-
-data_type heap_max(Heap *heap) {
-    return vector_get(heap->nodes, 0);
-} // O(1)
-
-
-double heap_max_priority(Heap *heap) {
-    HeapNode *aux = (HeapNode*)vector_get(heap->nodes, 0);
-    return aux->priority;
-} // O(1)
-
-
-data_type heap_pop(Heap *heap) {
-    if (heap->size == 0) {
-        return NULL;
-    }
-
-    HeapNode *super_grandparent = vector_get(heap->nodes, 0);
-    
-    vector_swap(heap->nodes, 0, heap->size-1);
-    vector_pop_back(heap->nodes);
-
-    heap->size--;
-
-    heap_heapify_down(heap, 0);
-
-    data_type aux = super_grandparent->data;
-    free(super_grandparent);
-    
-    return aux;
-}
-
-
-void heap_destroy(Heap *heap, void(*free_func)(data_type)) {
-    vector_destroy(heap->nodes, free_func);
-    free(heap);
-}
-
-
+/**
+ * @brief Fixes the heap property by moving the newly inserted element to the correct position
+ * 
+ * @param heap
+ * Pointer to the heap
+ * @param idx
+ * The index of the element to be manipulated
+*/
 void heap_heapify_up(Heap *heap, int idx) {
     int parent = (idx - 1)/2;
     HeapNode *HN_1 = vector_get(heap->nodes, parent);
@@ -126,7 +86,14 @@ void heap_heapify_up(Heap *heap, int idx) {
     }
 }
 
-
+/**
+ * @brief Fixes the heap property by moving the smallest or largest element to the root and recursively fixing the heap property for the whole heap
+ * 
+ * @param heap
+ * Pointer to the heap
+ * @param idx
+ * The index of the element to be manipulated
+*/
 void heap_heapify_down(Heap *heap, int idx) {
     int left = 2 * idx + 1;
     int right = 2 * idx + 2;
@@ -157,10 +124,60 @@ void heap_heapify_down(Heap *heap, int idx) {
 }
 
 
-void swap_nodes(Heap *heap, int idx1, int idx2) {
-    HeapNode *aux = vector_get(heap->nodes, idx1);
-    vector_set(heap->nodes, idx1, vector_get(heap->nodes, idx2));
-    vector_set(heap->nodes, idx2, aux);
+////////////////////////////////////////////////
+// Functions that the user of the heap can use //
+////////////////////////////////////////////////
+
+
+Heap *heap_construct() {
+    Heap *heap = (Heap*)malloc(sizeof(Heap));
+    
+    heap->nodes = vector_construct();
+    heap->size = 0;
+    heap->capacity = HEAP_INITIAL_CAPACITY;
+
+    return heap;
+}
+
+
+void heap_destroy(Heap *heap, void(*free_func)(data_type)) {
+    vector_destroy(heap->nodes, free_func);
+    free(heap);
+}
+
+
+void heap_push(Heap *heap, data_type data, double priority) {
+    HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
+
+    HN->data = data;
+    HN->priority = priority;
+    vector_push_back(heap->nodes, HN);
+    heap->size++;
+    heap_heapify_up(heap, heap->size-1);
+    if (heap->size == heap->capacity) {
+        heap->capacity *= HEAP_GROWTH_RATE;
+    }
+}
+
+
+data_type heap_pop(Heap *heap) {
+    if (heap->size == 0) {
+        return NULL;
+    }
+
+    HeapNode *super_grandparent = vector_get(heap->nodes, 0);
+    
+    vector_swap(heap->nodes, 0, heap->size-1);
+    vector_pop_back(heap->nodes);
+
+    heap->size--;
+
+    heap_heapify_down(heap, 0);
+
+    data_type aux = super_grandparent->data;
+    free(super_grandparent);
+    
+    return aux;
 }
 
 
@@ -172,3 +189,28 @@ void heap_print(Heap *heap, void(*print_func)(data_type)) {
 data_type heap_get(Heap *heap, int idx) {
     return vector_get(heap->nodes, idx);
 }
+
+
+bool heap_empty(Heap *heap) {
+    if (heap->size == 0) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+data_type heap_max(Heap *heap) {
+    return vector_get(heap->nodes, 0);
+}
+
+
+double heap_max_priority(Heap *heap) {
+    HeapNode *aux = (HeapNode*)vector_get(heap->nodes, 0);
+    return aux->priority;
+}
+
+
+
+
