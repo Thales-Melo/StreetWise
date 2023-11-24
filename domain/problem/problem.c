@@ -12,21 +12,21 @@ Problem *problem_data_read(char *file) {
         return NULL;
     }
 
-    Problem *P = malloc(sizeof(Problem));
+    Problem *prob = malloc(sizeof(Problem));
 
     int size;
     fscanf (F, "%d\n", &size);
 
-    P->graph = graph_construct(size);
-    P->graph->size = size;
+    prob->graph = graph_construct(size);
+    prob->graph->size = size;
     
     int n_city;
     float distance;
     int count = 0;
 
     while (fscanf(F, "%d %f", &n_city, &distance) == 2) {
-        P->graph->metropolis[count]->id = count;
-        city_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], distance);
+        prob->graph->metropolis[count]->id = count;
+        city_connect(prob->graph->metropolis[count], prob->graph->metropolis[n_city], distance);
         if (getc(F) == '\n') {
             count++;
         }
@@ -34,13 +34,14 @@ Problem *problem_data_read(char *file) {
             break;
         }
     }
-    fclose(F);
     
-    return P;
+    fclose(F);
+
+    return prob;
 }
 
 
-void problem_data_destroy(Problem *P) {
-    graph_destroy(P->graph);
-    free(P);
+void problem_data_destroy(Problem *prob) {
+    graph_destroy(prob->graph);
+    free(prob);
 }

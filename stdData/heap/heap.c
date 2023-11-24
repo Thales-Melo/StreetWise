@@ -124,9 +124,9 @@ void heap_heapify_down(Heap *heap, int idx) {
 }
 
 
-////////////////////////////////////////////////
-// Functions that the user of the heap can use //
-////////////////////////////////////////////////
+/////////////////////////////////////////////
+// FUNÇÕES QUE O USUÁRIO DO HEAP PODE USAR //
+/////////////////////////////////////////////
 
 
 Heap *heap_construct() {
@@ -151,12 +151,16 @@ void heap_push(Heap *heap, data_type data, double priority) {
 
     HN->data = data;
     HN->priority = priority;
+
     vector_push_back(heap->nodes, HN);
     heap->size++;
-    heap_heapify_up(heap, heap->size-1);
+
     if (heap->size == heap->capacity) {
         heap->capacity *= HEAP_GROWTH_RATE;
     }
+    
+    heap_heapify_up(heap, heap->size-1);
+    
 }
 
 
@@ -175,6 +179,7 @@ data_type heap_pop(Heap *heap) {
     heap_heapify_down(heap, 0);
 
     data_type aux = super_grandparent->data;
+
     free(super_grandparent);
     
     return aux;
@@ -195,6 +200,7 @@ bool heap_empty(Heap *heap) {
     if (heap->size == 0) {
         return 1;
     }
+    
     else {
         return 0;
     }

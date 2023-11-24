@@ -5,11 +5,11 @@
 
 Graph *graph_construct(int size) {
     Graph *G = malloc(sizeof(Graph));
+
     G->metropolis = (City**)malloc(sizeof(City*)*size);
     for (int i=0; i<size; i++) {
         G->metropolis[i] = city_construct();
     }
-
     
     return G;
 }

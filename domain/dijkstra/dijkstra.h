@@ -8,12 +8,12 @@
 /**
  * @brief Solves the problem using Dijkstra's algorithm
  * 
- * @param problem 
+ * @param prob
  * The problem to be solved
  * 
  * @return Vector*
  * The vector of parents
  */
-Vector *dijkstra_solve(Problem *problem);
+Vector *dijkstra_solve(Problem *prob);
 
 #endif

@@ -6,8 +6,10 @@
 
 Path *path_construct() {
     Path *path = (Path*)malloc(sizeof(Path));
+    
     path->route = list_construct();
     path->distance = 0;
+
     return path;
 }
 

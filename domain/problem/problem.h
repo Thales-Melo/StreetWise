@@ -27,10 +27,10 @@ Problem *problem_data_read(char *file);
 /**
  * @brief Destroy the problem data
  * 
- * @param P
+ * @param prob
  * The problem data to be destroyed
 */
-void problem_data_destroy(Problem *P);
+void problem_data_destroy(Problem *prob);
 
 
 #endif

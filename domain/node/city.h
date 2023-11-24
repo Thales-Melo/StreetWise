@@ -30,14 +30,14 @@ City *city_construct();
 /**
  * @brief Connects two cities
  * 
- * @param C_1 
+ * @param city_1 
  * City 1 (the one that will have a route to city 2)
- * @param C_2
+ * @param city_2
  * City 2 (the one that will be connected to city 1)
  * @param distance 
  * Distance between the two cities
 */
-void city_connect(City *C_1, City *C_2, float distance);
+void city_connect(City *city_1, City *city_2, float distance);
 
 /**
  * @brief Destroy the City struct
@@ -50,12 +50,12 @@ void city_destroy(City *city);
 /**
  * @brief Prints a city
  * 
- * @param N 
+ * @param city
  * Pointer to the city to be printed
  * @param print_fn 
  * Function pointer that prints the city
 */
-void city_print(data_type N, void (*print_fn)(data_type));
+void city_print(data_type city, void (*print_fn)(data_type));
 
 
 #endif
