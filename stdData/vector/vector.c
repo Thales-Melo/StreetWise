@@ -17,7 +17,7 @@ Vector *vector_construct() {
     Vector *v = (Vector*)malloc(sizeof(Vector));
 
     v->allocated = VECTOR_STD_SIZE;
-    v->data = (data_type*)calloc(v->allocated, sizeof(data_type));
+    v->data = (data_type*)malloc(sizeof(data_type)*v->allocated);
     v->size = 0;
 
     return v;
@@ -53,6 +53,8 @@ data_type vector_get(Vector *v, int i) {
         return v->data[i];
     }
     else {
+        printf ("vector_get: Invalid index\n");
+        printf ("i = %d\n", i);
         exit(1);
     }
 }
@@ -62,6 +64,8 @@ void vector_set(Vector *v, int i, data_type val) {
         v->data[i] = val;
     }
     else {
+        printf ("vector_set: Invalid index\n");
+        printf ("i = %d\n", i);
         exit(1);
     }
 }
