@@ -4,9 +4,10 @@
 #include "../../stdData/heap/heap.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../../stdData/vector/vector.h"
 
 typedef struct{
-    Heap *routes;
+    Vector *routes;
     int n_neighbors;
     float distance_to_start;
     int id;
@@ -15,7 +16,7 @@ typedef struct{
 
 City *city_construct();
 
-void city_connect(City *N_1, City *N_2, int city_num, float distance);
+void city_connect(City *N_1, City *N_2, float distance);
 
 void city_destroy(City *city);
 

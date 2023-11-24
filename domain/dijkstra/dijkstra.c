@@ -73,13 +73,17 @@ Vector *dijkstra_solve(Problem *P) {
         }
 
         for (int i=0; i<C->n_neighbors; i++) {
-            HeapNode *aux = (HeapNode*)heap_pop(C->routes, floatcmp);
+            // HeapNode *aux = (HeapNode*)heap_pop(C->routes, floatcmp);
             // printf ("C->size = %d\n", C->n_neighbors);
-            if (aux == NULL) {
-                // printf ("aux == NULL\n");
+            // if (aux == NULL) {
+            //     // printf ("aux == NULL\n");
+            //     continue;
+            // }
+            Route *neighboor = (Route*)vector_get(C->routes, i);
+            if (neighboor == NULL) {
+                // printf ("neighboor == NULL\n");
                 continue;
             }
-            Route *neighboor = (Route*)getHeapNodeData(aux);
             // if (Visited[neighboor->city->id] == FALSE) {
                 // neighboor->city->distance_to_start += neighboor->distance;
                 // float original_distance = neighboor->city->distance_to_start;
@@ -100,11 +104,14 @@ Vector *dijkstra_solve(Problem *P) {
                 // printf ("neighboor->distance: %lf\n", neighboor->distance);
 
                 heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, C->distance_to_start + neighboor->distance), neighboor->city->distance_to_start);
+                
+                // route_destroy(neighboor);
+                // neighboor = NULL;
                 // neighboor->city->distance_to_start = original_distance;
             // }
 
             // Liberar memória alocada dentro do loop
-            heapNode_destroy(aux, route_destroy);
+            // heapNode_destroy(aux, route_destroy);
         }
 
         // Liberar memória alocada dentro do loop
@@ -147,10 +154,10 @@ Vector *dijkstra_solve(Problem *P) {
         // printf ("\n\n|||||||||||||||\n\n");
     }
 
-    vector_destroy(parents, parent_destroy);
-    // free(origin);
-    heap_destroy(NotVisited, parent_destroy);
     free(Visited);
+    vector_destroy(parents, parent_destroy);
+    heap_destroy(NotVisited, parent_destroy);
+    // free(origin);
 
     return paths;
 }

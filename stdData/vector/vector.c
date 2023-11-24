@@ -25,6 +25,7 @@ Vector *vector_construct() {
 
 void vector_destroy(Vector *v, void(*free_func)(data_type)) {
     if (free_func == NULL) {
+        // printf("vector_destroy: free_func is NULL\n");
         free(v->data);
         free(v);
         return;
@@ -112,14 +113,25 @@ data_type vector_pop_front(Vector *v) {
     }
 
     vector_pop_back(v);
-
+    if (first == NULL) {
+        printf ("first == NULL\n");
+        exit(1);
+    }
     return first;
 }
 
 data_type vector_pop_back(Vector *v) {
+    if (v->size == 0) {
+        printf ("vector_pop_back: Vector is empty\n");
+        return NULL;
+    }
     data_type last = v->data[v->size-1];
     v->size--;
 
+    if (last == NULL) {
+        printf ("last == NULL\n");
+        return NULL;
+    }
     return last;
 }
 

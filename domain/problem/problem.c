@@ -21,7 +21,7 @@ Problem *problem_data_read(char *file) {
     while (fscanf(F, "%d %f", &n_city, &distance) == 2) {
         // printf("%d %.0f ", n_city, distance);
         P->graph->metropolis[count]->id = count;
-        city_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], n_city, distance);
+        city_connect(P->graph->metropolis[count], P->graph->metropolis[n_city], distance);
         if (getc(F) == '\n') {
             // printf ("count: %d\n", count);
             count++;
