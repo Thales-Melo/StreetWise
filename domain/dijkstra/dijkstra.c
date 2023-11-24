@@ -20,28 +20,28 @@
  * The problem to be solved
  * @param parents
  * The array of parents
- * @param Visited
+ * @param visited
  * Array of booleans to mark visited nodes
- * @param NotVisited
+ * @param not_visited
  * Heap of unvisited nodes
 */
-void dijkstra_algorithm(Problem *P, Vector *parents, bool *Visited, Heap *NotVisited) {
+void dijkstra_algorithm(Problem *P, Vector *parents, bool *visited, Heap *not_visited) {
     P->graph->metropolis[0]->distance_to_start = 0;
     //Inicializa o heap com o nó de origem
     Parent *origin = parent_construct(0, 0, 0);
-    heap_push(NotVisited, origin, 0);
+    heap_push(not_visited, origin, 0);
 
     int parent_id = 0;
 
     // Enquanto houver nós não visitados, o algoritmo continua
-    while (!heap_empty(NotVisited)) {
-        Parent *par = (Parent *)heap_pop(NotVisited);
+    while (!heap_empty(not_visited)) {
+        Parent *par = (Parent *)heap_pop(not_visited);
         City *C = P->graph->metropolis[par->id];
 
         // Só entra no if se o nó não foi visitado
         // Se entrar, ele é marcado como visitado e adicionado ao vetor de pais
-        if (!Visited[C->id]) {
-            Visited[C->id] = TRUE;
+        if (!visited[C->id]) {
+            visited[C->id] = TRUE;
             parent_id = par->parent;
             vector_set(parents, C->id, parent_construct(parent_id, C->id, C->distance_to_start));
         }
@@ -56,7 +56,7 @@ void dijkstra_algorithm(Problem *P, Vector *parents, bool *Visited, Heap *NotVis
 
             if (neighbor->city->distance_to_start == 0 || neighbor->city->distance_to_start > new_distance) {
                 neighbor->city->distance_to_start = new_distance;
-                heap_push(NotVisited, parent_construct(C->id, neighbor->city->id, new_distance), neighbor->city->distance_to_start);
+                heap_push(not_visited, parent_construct(C->id, neighbor->city->id, new_distance), neighbor->city->distance_to_start);
             }
         }
 
@@ -125,19 +125,19 @@ Vector *parent_vector_initialize(int size) {
 
 
 Vector *dijkstra_solve(Problem *P) {
-    bool *Visited = (bool *)calloc(P->graph->size, sizeof(bool));
-    Heap *NotVisited = heap_construct();
+    bool *visited = (bool *)calloc(P->graph->size, sizeof(bool));
+    Heap *not_visited = heap_construct();
     Vector *parents = parent_vector_initialize(P->graph->size);
 
     // Executa o algoritmo de Dijkstra
-    dijkstra_algorithm(P, parents, Visited, NotVisited);
+    dijkstra_algorithm(P, parents, visited, not_visited);
 
     // Cria o vetor de caminhos a partir do vetor de pais
     Vector *paths = path_vector_construct(P, parents);
 
-    free(Visited);
+    free(visited);
     vector_destroy(parents, parent_destroy);
-    heap_destroy(NotVisited, parent_destroy);
+    heap_destroy(not_visited, parent_destroy);
 
     return paths;
 }
