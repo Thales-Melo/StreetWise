@@ -33,11 +33,16 @@ void list_push_front(List *l, data_type data) {
 }
 
 
-void list_push_back(List *l, data_type data) {
+void list_push_back(List *l, data_type data, void (*print_fn)(data_type)) {
+    printf("\ndata: ");
+    print_fn(data);
+    printf ("\nl->value:");
     if (l->size == 0) {
         l->head = node_construct(data, NULL, NULL);
         l->last = l->head;
         l->size++;
+        print_fn(l->head->value);
+        printf("\n");
         return;
     }
     else {
@@ -45,15 +50,18 @@ void list_push_back(List *l, data_type data) {
         l->last->next = aux;
         l->last = aux;
         l->size++;
+        print_fn(l->last->value);
+        printf("\n");
     }
 }
 
 void list_print(List *l, void (*print_fn)(data_type)) {
     Node *aux = l->head;
+    printf ("list->size: %d\n", l->size);
     // printf ("[");
     while (aux != NULL) {
         node_print(aux, print_fn);
-
+        // print_fn(aux->value);
         if (aux->next != NULL) {
             printf (" -> ");
         }
@@ -113,7 +121,16 @@ data_type list_pop_back(List *l, void (*free_func)(data_type)) {
     return value;
 }
 
-// List *list_reverse(List *l);
+// List *list_reverse(List *l) {
+//     List *new_list = list_construct();
+//     Node *aux = l->last;
+//     while (aux != NULL) {
+//         list_push_back(new_list, aux->value);
+//         aux = aux->prev;
+//     }
+
+//     return new_list;
+// }
 
 // void list_clear(List *l);
 

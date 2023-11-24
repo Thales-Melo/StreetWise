@@ -34,6 +34,10 @@ Vector *dijkstra_solve(Problem *P) {
     bool *Visited = (bool*)calloc(P->graph->size, sizeof(bool));
     Heap *NotVisited = heap_construct();
     Vector *parents = vector_construct();
+    // inicializar o vetor parents com 0
+    for (int i=0; i<P->graph->size; i++) {
+        vector_push_back(parents, parent_construct(0, 0, 0));
+    }
 
     P->graph->metropolis[0]->distance_to_start = 0;
     // Inicializa o vetor de não visitados com a origem
@@ -59,8 +63,8 @@ Vector *dijkstra_solve(Problem *P) {
         if (Visited[C->id] == FALSE) {
             Visited[C->id] = TRUE;
             parent_id = par->parent;
-            vector_push_back(parents, parent_construct(parent_id, C->id, C->distance_to_start));
-            // vector_set(parents, C->id, parent_construct(parent_id, C->id, C->distance_to_start));
+            // vector_push_back(parents, parent_construct(parent_id, C->id, C->distance_to_start));
+            vector_set(parents, C->id, parent_construct(parent_id, C->id, C->distance_to_start));
             printf ("parent_id: %d\n", parent_id);
             printf ("C->id: %d\n", C->id);
             printf ("C->distance_to_start: %lf\n\n", C->distance_to_start);
@@ -76,19 +80,28 @@ Vector *dijkstra_solve(Problem *P) {
                 continue;
             }
             Route *neighboor = (Route*)getHeapNodeData(aux);
-            if (Visited[neighboor->city->id] == FALSE) {
+            // if (Visited[neighboor->city->id] == FALSE) {
                 // neighboor->city->distance_to_start += neighboor->distance;
                 // float original_distance = neighboor->city->distance_to_start;
-                neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
+                if (neighboor->city->distance_to_start == 0) {
+                    neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
+                }
+                else if (neighboor->city->distance_to_start > C->distance_to_start + neighboor->distance) {
+                    neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
+                }
+                else {
+                    continue;
+                }
+                // neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
                 printf("pai: %d\n", C->id);
                 printf ("neighboor->city->id: %d\n", neighboor->city->id);
                 printf ("pai->distance_to_start: %lf\n", C->distance_to_start);
                 printf ("neighboor->city->distance_to_start: %lf\n", neighboor->city->distance_to_start);
                 printf ("neighboor->distance: %lf\n", neighboor->distance);
 
-                heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, neighboor->city->distance_to_start), neighboor->city->distance_to_start);
+                heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, C->distance_to_start + neighboor->distance), neighboor->city->distance_to_start);
                 // neighboor->city->distance_to_start = original_distance;
-            }
+            // }
         }
 
 
@@ -99,6 +112,33 @@ Vector *dijkstra_solve(Problem *P) {
         printf("Parent: %d, id: %d, cost: %.2lf\n", ((Parent*)vector_get(parents, i))->parent, ((Parent*)vector_get(parents, i))->id, ((Parent*)vector_get(parents, i))->cost);
     }
 
+    // construir o paths agora com a menor rota completa
+    // para cada cidade, pegar o parent no vetor de parents e ir adicionando no path
+
+    for (int i=1; i<P->graph->size; i++) {
+        Path *path = path_construct();
+        Parent *par = (Parent*)vector_get(parents, i);
+        path->distance = par->cost;
     
+        while (par->id != 0) {
+            printf ("par->id: %d\n", par->id);
+            printf ("par->parent: %d\n", par->parent);
+            path_add(path, par->id);
+            par = (Parent*)vector_get(parents, par->parent);
+            printf ("||||||||||||");
+            printf ("par->id: %d\n", par->id);
+            printf ("par->parent: %d\n", par->parent);
+            printf ("\n\n");
+        }
+
+        path_add(path, 0);
+        // vector_reverse(path->route);
+        vector_push_back(paths, path);
+
+        // path_print(path);
+
+        printf ("\n\n|||||||||||||||\n\n");
+    }
+
     return paths;
 }

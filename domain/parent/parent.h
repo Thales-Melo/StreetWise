@@ -6,10 +6,10 @@
 typedef struct {
     int parent;
     int id;
-    double cost;
+    float cost;
 } Parent;
 
-Parent *parent_construct(int parent, int id, double cost);
+Parent *parent_construct(int parent, int id, float cost);
 
 void parent_print(Parent *par);
 

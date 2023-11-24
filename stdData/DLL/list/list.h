@@ -52,7 +52,7 @@ void list_push_front(List *l, data_type data);
  * @param data
  * data to be stored in the new node.
  */
-void list_push_back(List *l, data_type data);
+void list_push_back(List *l, data_type data, void (*print_fn)(data_type));
 
 /**
  * @brief Print the elements of the double linked list.

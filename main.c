@@ -24,7 +24,7 @@ int main() {
     Problem *problem_data = problem_data_read("file/input.txt");
     Vector *paths = dijkstra_solve(problem_data);
 
-    // print_and_destroy_paths(paths);
+    print_and_destroy_paths(paths);
     
     problem_data_destroy(problem_data);
 

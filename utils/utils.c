@@ -6,7 +6,8 @@
 
 
 void print_int(data_type data) {
-  printf("%d", *((int*)data));
+  int d = *(int*)data;
+  printf("%d", d);
 }
 
 

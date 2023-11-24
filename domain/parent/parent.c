@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Parent *parent_construct(int parent, int id, double cost) {
+Parent *parent_construct(int parent, int id, float cost) {
     Parent *par = (Parent*)malloc(sizeof(Parent));
     par->parent = parent;
     par->id = id;
@@ -12,7 +12,7 @@ Parent *parent_construct(int parent, int id, double cost) {
 }
 
 void parent_print(Parent *par) {
-    printf("Parent: %d, id: %d, cost: %lf\n", par->parent, par->id, par->cost);
+    printf("Parent: %d, id: %d, cost: %f\n", par->parent, par->id, par->cost);
 }
 
 void parent_destroy(Parent *par) {
