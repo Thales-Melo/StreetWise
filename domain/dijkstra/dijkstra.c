@@ -6,76 +6,52 @@
 #include "../route/route.h"
 #include "../path/path.h"
 #include "../parent/parent.h"
-#include "../../stdData/heap/heap.h"
 
 
-Vector *dijkstra_solve(Problem *P) {
-
-    Vector *paths = vector_construct();
-    bool *Visited = (bool*)calloc(P->graph->size, sizeof(bool));
-    Heap *NotVisited = heap_construct();
-    Vector *parents = vector_construct();
-
-    for (int i=0; i<P->graph->size; i++) {
-        vector_push_back(parents, NULL);
-    }
-
+void dijkstra_algorithm(Problem *P, Vector *parents, bool *Visited, Heap *NotVisited) {
     P->graph->metropolis[0]->distance_to_start = 0;
 
     Parent *origin = parent_construct(0, 0, 0);
     heap_push(NotVisited, origin, 0);
-    
+
     int parent_id = 0;
 
     while (!heap_empty(NotVisited)) {
-        HeapNode *HN = (HeapNode*)heap_pop(NotVisited, floatcmp);
-        Parent *par = (Parent*)getHeapNodeData(HN);
+        Parent *par = (Parent *)heap_pop(NotVisited);
         City *C = P->graph->metropolis[par->id];
-        
-        if (Visited[C->id] == FALSE) {
+
+        if (!Visited[C->id]) {
             Visited[C->id] = TRUE;
             parent_id = par->parent;
             vector_set(parents, C->id, parent_construct(parent_id, C->id, C->distance_to_start));
         }
 
-        for (int i=0; i<C->n_neighbors; i++) {
-            Route *neighboor = (Route*)vector_get(C->routes, i);
-            if (neighboor == NULL) {
+        for (int i = 0; i < C->n_neighbors; i++) {
+            Route *neighbor = (Route *)vector_get(C->routes, i);
+            if (neighbor == NULL) {
                 continue;
             }
-                if (neighboor->city->distance_to_start == 0) {
-                    neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
-                }
-                else if (neighboor->city->distance_to_start > C->distance_to_start + neighboor->distance) {
-                    neighboor->city->distance_to_start = C->distance_to_start + neighboor->distance;
-                }
-                else {
-                    continue;
-                }
 
-                heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, C->distance_to_start + neighboor->distance), neighboor->city->distance_to_start);
+            int new_distance = C->distance_to_start + neighbor->distance;
+
+            if (neighbor->city->distance_to_start == 0 || neighbor->city->distance_to_start > new_distance) {
+                neighbor->city->distance_to_start = new_distance;
+                heap_push(NotVisited, parent_construct(C->id, neighbor->city->id, new_distance), neighbor->city->distance_to_start);
+            }
         }
 
-        heapNode_destroy(HN, parent_destroy);
-
+        free(par);
     }
+}
 
 
-    for (int i=1; i<P->graph->size; i++) {
-        Path *path = path_construct();
-        Parent *par = (Parent*)vector_get(parents, i);
-        path->distance = par->cost;
-    
-        while (par->id != 0) {
-            path_add(path, par->id);
-            par = (Parent*)vector_get(parents, par->parent);
-        }
+Vector *dijkstra_solve(Problem *P) {
+    bool *Visited = (bool *)calloc(P->graph->size, sizeof(bool));
+    Heap *NotVisited = heap_construct();
+    Vector *parents = parent_vector_initialize(P->graph->size);
 
-        path_add(path, START_CITY);
-
-        vector_push_back(paths, path);
-
-    }
+    dijkstra_algorithm(P, parents, Visited, NotVisited);
+    Vector *paths = path_vector_construct(P, parents);
 
     free(Visited);
     vector_destroy(parents, parent_destroy);

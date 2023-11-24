@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "../vector/vector.h"
 
+
 struct HeapNode {
     data_type data;
     double priority;
@@ -15,6 +16,32 @@ struct Heap {
     int capacity;
 };
 
+
+data_type getHeapNodeData(HeapNode *HN) {
+    return HN->data;
+}
+
+
+double getHeapNodePriority(HeapNode *HN) {
+    return HN->priority;
+}
+
+void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
+    HeapNode *aux = (HeapNode*)data;
+    if (free_func != NULL) {
+        free_func(aux->data);
+    }
+    free(aux);
+}
+
+
+void heapNode_print(data_type data) {
+    HeapNode *aux = (HeapNode*)data;
+
+    printf("%s - %.2f\n", (char*)aux->data, aux->priority);
+}
+
+
 Heap *heap_construct() {
     Heap *heap = (Heap*)malloc(sizeof(Heap));
     
@@ -25,7 +52,7 @@ Heap *heap_construct() {
     return heap;
 }
 
-#include "../../domain/route/route.h"
+
 void heap_push(Heap *heap, data_type data, double priority) {
     HeapNode *HN = (HeapNode*)malloc(sizeof(HeapNode));
 
@@ -39,6 +66,7 @@ void heap_push(Heap *heap, data_type data, double priority) {
     }
 }
 
+
 bool heap_empty(Heap *heap) {
     if (heap->size == 0) {
         return 1;
@@ -48,9 +76,11 @@ bool heap_empty(Heap *heap) {
     }
 } // O(1)
 
+
 data_type heap_max(Heap *heap) {
     return vector_get(heap->nodes, 0);
 } // O(1)
+
 
 double heap_max_priority(Heap *heap) {
     HeapNode *aux = (HeapNode*)vector_get(heap->nodes, 0);
@@ -58,7 +88,7 @@ double heap_max_priority(Heap *heap) {
 } // O(1)
 
 
-data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
+data_type heap_pop(Heap *heap) {
     if (heap->size == 0) {
         return NULL;
     }
@@ -70,9 +100,12 @@ data_type heap_pop(Heap *heap, int(*cmp_func)(data_type, data_type)) {
 
     heap->size--;
 
-    heap_heapify_down(heap, 0, cmp_func);
-   
-    return super_grandparent;
+    heap_heapify_down(heap, 0);
+
+    data_type aux = super_grandparent->data;
+    free(super_grandparent);
+    
+    return aux;
 }
 
 
@@ -94,7 +127,7 @@ void heap_heapify_up(Heap *heap, int idx) {
 }
 
 
-void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)) {
+void heap_heapify_down(Heap *heap, int idx) {
     int left = 2 * idx + 1;
     int right = 2 * idx + 2;
     int largest = idx;
@@ -119,7 +152,7 @@ void heap_heapify_down(Heap *heap, int idx, int(*cmp_func)(data_type, data_type)
 
     if (largest != idx) {
         swap_nodes(heap, idx, largest);
-        heap_heapify_down(heap, largest, cmp_func);
+        heap_heapify_down(heap, largest);
     }
 }
 
@@ -133,32 +166,6 @@ void swap_nodes(Heap *heap, int idx1, int idx2) {
 
 void heap_print(Heap *heap, void(*print_func)(data_type)) {
     vector_print(heap->nodes, print_func);
-}
-
-
-void heapNode_print(data_type data) {
-    HeapNode *aux = (HeapNode*)data;
-
-    printf("%s - %.2f\n", (char*)aux->data, aux->priority);
-}
-
-
-void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
-    HeapNode *aux = (HeapNode*)data;
-    if (free_func != NULL) {
-        free_func(aux->data);
-    }
-    free(aux);
-}
-
-
-data_type getHeapNodeData(HeapNode *HN) {
-    return HN->data;
-}
-
-
-double getHeapNodePriority(HeapNode *HN) {
-    return HN->priority;
 }
 
 

@@ -2,7 +2,7 @@
 #include "../../utils/utils.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "../parent/parent.h"
 
 Path *path_construct() {
     Path *path = (Path*)malloc(sizeof(Path));
@@ -37,3 +37,23 @@ void path_add(Path *path, int id) {
 }
 
 
+Vector *path_vector_construct(Problem *P, Vector *parents) {
+    Vector *paths = vector_construct();
+
+    for (int i = 1; i < P->graph->size; i++) {
+        Path *path = path_construct();
+        Parent *par = (Parent *)vector_get(parents, i);
+        path->distance = par->cost;
+
+        while (par->id != 0) {
+            path_add(path, par->id);
+            par = (Parent *)vector_get(parents, par->parent);
+        }
+
+        path_add(path, START_CITY);
+
+        vector_push_back(paths, path);
+    }
+
+    return paths;
+}

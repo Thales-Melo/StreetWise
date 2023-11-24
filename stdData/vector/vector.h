@@ -1,13 +1,15 @@
 #ifndef _DATA_STRUCTURES_VECTOR_H_
 #define _DATA_STRUCTURES_VECTOR_H_
 
+
 #define VECTOR_FILE "vector_data.txt"
 #define EXISTE 1
 #define NAO_EXISTE 0
 
-typedef void* data_type;
 
+typedef void* data_type;
 typedef struct vector Vector;
+
 
 // Aloca espaço para um elemento do tipo vector e inicializa os seus atributos.
 Vector *vector_construct(); 
@@ -29,6 +31,7 @@ void vector_set(Vector *v, int i, data_type val);
 
 // Retorna o índice da primeira ocorrência do item no Vector ou -1 se o elemento não for encontrado.
 int vector_find(Vector *v, data_type val, int(*cmp_func)(data_type, data_type)); 
+
 
 ///////////////////////////////////////////////////////////////
 // LAB-2
@@ -59,22 +62,7 @@ int vector_binary_search(Vector *v, data_type val);
 // // Inverte o vetor in-place (sem criar um novo vetor)
 void vector_reverse(Vector *v); 
 
-// // Cria uma cópia do vector e dos valores de seus atributos.
-// Vector *vector_copy(Vector *v); 
-
-// // Remove todos os elementos de v
-// void vector_clear(Vector *v);
-
-///////////////////////////////////////////////////////////////
-// EXTRA
-////////////////////////////////////////////////////////////// 
-
-// void vector_save(Vector *v, char *file);
-
-// Vector *vector_load(char *file);
-
-// int vector_data_is_stored (char *file);
-
 void vector_print(Vector *v, void(*print_func)(data_type));
+
 
 #endif

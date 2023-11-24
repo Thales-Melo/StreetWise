@@ -20,8 +20,10 @@ void print_and_destroy_paths(Vector *paths)
 
 
 int main() {
-    // logo();
     Problem *problem_data = problem_data_read("file/inputs/input.txt");
+    if (problem_data == NULL) {
+        return 0;
+    }
     Vector *paths = dijkstra_solve(problem_data);
 
     print_and_destroy_paths(paths);

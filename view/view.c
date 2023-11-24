@@ -2,7 +2,8 @@
 #include "../utils/utils.h"
 #include <stdio.h>
 
-void logo() {
+
+void view_logo() {
   printf ("\n\n");
   printf(" _____  _                   _    _ _ _  _\n");
   printf("|   __|| |_  ___  ___  ___ | |_ | | | ||_| ___  ___\n");
@@ -12,18 +13,11 @@ void logo() {
 }
 
 
-void printArquivoNaoExiste(char *filename) {
-    char msg_erro[100];
-    msg_erro[0] = '\0';
-    sprintf (msg_erro, "\nArquivo \"%s\" não existe", filename);
-    printAmarelo(msg_erro);
-    printf ("\n\n");
+void view_print_file_nonexistent(char *filename) {
+    // char msg_erro[100];
+    // msg_erro[0] = '\0';
+    // sprintf (msg_erro, "\nArquivo \"%s\" não existe", filename);
+    // printAmarelo(msg_erro);
+    printf ("\nArquivo %s não existe\n\n", filename);
 }
 
-
-void printArquivoGerado(char *arquivo) {
-  char msg[100];
-  msg[0] = '\0';
-  sprintf (msg, "\n\nArquivo %s gerado com sucesso!\n\n", arquivo);
-  printAmarelo(msg);
-}

@@ -3,12 +3,16 @@
 #include "../../utils/utils.h"
 #include "../route/route.h"
 #include <stdio.h>
-
+#include "../../view/view.h"
 
 Problem *problem_data_read(char *file) {
-    Problem *P = malloc(sizeof(Problem));
-
     FILE *F = fopen(file, "r");
+    if (F == NULL) {
+        view_print_file_nonexistent(file);
+        return NULL;
+    }
+
+    Problem *P = malloc(sizeof(Problem));
 
     int size;
     fscanf (F, "%d\n", &size);
