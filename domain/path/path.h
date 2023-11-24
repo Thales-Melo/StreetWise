@@ -6,12 +6,12 @@
 #define START_CITY 0
 
 typedef struct {
-    // List *route;
-    int *route;
+    List *route;
+    // int *route;
     float distance;
     int start_city;
-    int size;
-    int capacity;
+    // int size;
+    // int capacity;
 } Path;
 
 Path *path_construct();

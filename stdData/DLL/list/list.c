@@ -57,7 +57,7 @@ void list_push_back(List *l, data_type data, void (*print_fn)(data_type)) {
 
 void list_print(List *l, void (*print_fn)(data_type)) {
     Node *aux = l->head;
-    printf ("list->size: %d\n", l->size);
+    // printf ("list->size: %d\n", l->size);
     // printf ("[");
     while (aux != NULL) {
         node_print(aux, print_fn);

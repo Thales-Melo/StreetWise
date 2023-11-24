@@ -131,11 +131,12 @@ Vector *dijkstra_solve(Problem *P) {
             printf ("\n\n");
         }
 
-        path_add(path, 0);
+        int start_city = 0;
+        path_add(path, start_city);
         // vector_reverse(path->route);
+        // path_print(path);
         vector_push_back(paths, path);
 
-        // path_print(path);
 
         printf ("\n\n|||||||||||||||\n\n");
     }
