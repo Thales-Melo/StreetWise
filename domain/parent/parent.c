@@ -12,15 +12,6 @@ Parent *parent_construct(int parent, int id, float cost) {
 }
 
 
-Vector *parent_vector_initialize(int size) {
-    Vector *parents = vector_construct();
-    for (int i = 0; i < size; i++) {
-        vector_push_back(parents, NULL);
-    }
-    return parents;
-}
-
-
 void parent_print(Parent *par) {
     printf("Parent: %d, id: %d, cost: %f\n", par->parent, par->id, par->cost);
 }

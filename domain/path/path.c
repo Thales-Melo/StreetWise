@@ -34,26 +34,3 @@ void path_add(Path *path, int id) {
 
     list_push_front(path->route, id_ptr);
 }
-
-
-Vector *path_vector_construct(Problem *P, Vector *parents) {
-    Vector *paths = vector_construct();
-
-    for (int i = 1; i < P->graph->size; i++) {
-        Path *path = path_construct();
-        Parent *par = (Parent *)vector_get(parents, i);
-        path->distance = par->cost;
-
-        // Itera sobre os pais até chegar no nó inicial
-        while (par->id != 0) {
-            path_add(path, par->id);
-            par = (Parent *)vector_get(parents, par->parent);
-        }
-
-        path_add(path, START_NODE);
-
-        vector_push_back(paths, path);
-    }
-
-    return paths;
-}

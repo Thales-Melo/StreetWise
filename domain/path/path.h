@@ -53,17 +53,5 @@ void path_print(Path *path);
  */
 void path_add(Path *path, int id);
 
-/**
- * @brief Constructs a vector of paths
- * 
- * @param P 
- * Pointer to the problem 
- * @param parents 
- * Pointer to the vector of parents
- * 
- * @return Vector*
- * Pointer to the vector of paths
- */
-Vector *path_vector_construct(Problem *P, Vector *parents);
 
 #endif

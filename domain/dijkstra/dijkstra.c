@@ -7,6 +7,11 @@
 #include "../path/path.h"
 #include "../parent/parent.h"
 
+/////////////////////////////////////////////////////
+//     FUNÇÕES AUXILIARES QUE SÓ EXISTEM NO .C     //
+/////////////////////////////////////////////////////
+
+
 /**
  * @brief Helper function to perform the actual Dijkstra's algorithm.
  * It is used in the main function "dijkstra_solve" and exists only in the .c file.
@@ -58,6 +63,65 @@ void dijkstra_algorithm(Problem *P, Vector *parents, bool *Visited, Heap *NotVis
         free(par);
     }
 }
+
+
+/**
+ * @brief Constructs a vector of paths, its a helper function to the main function "dijkstra_solve"
+ * It exists only in the .c file.
+ * 
+ * @param P 
+ * Pointer to the problem 
+ * @param parents 
+ * Pointer to the vector of parents
+ * 
+ * @return Vector*
+ * Pointer to the vector of paths
+ */
+Vector *path_vector_construct(Problem *P, Vector *parents) {
+    Vector *paths = vector_construct();
+
+    for (int i = 1; i < P->graph->size; i++) {
+        Path *path = path_construct();
+        Parent *par = (Parent *)vector_get(parents, i);
+        path->distance = par->cost;
+
+        // Itera sobre os pais até chegar no nó inicial
+        while (par->id != 0) {
+            path_add(path, par->id);
+            par = (Parent *)vector_get(parents, par->parent);
+        }
+
+        path_add(path, START_NODE);
+
+        vector_push_back(paths, path);
+    }
+
+    return paths;
+}
+
+
+/**
+ * @brief Initializes a vector of parents, its a helper function to the main function "dijkstra_solve"
+ * It exists only in the .c file.
+ * 
+ * @param size
+ * The size of the vector
+ * 
+ * @return Vector*
+ * Pointer to the vector of parents
+*/
+Vector *parent_vector_initialize(int size) {
+    Vector *parents = vector_construct();
+    for (int i = 0; i < size; i++) {
+        vector_push_back(parents, NULL);
+    }
+    return parents;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+//     FUNÇÃO DIJKSTRA_SOLVE É A ÚNICA QUE O USUÁRIO TEM ACESSO     //
+//////////////////////////////////////////////////////////////////////
 
 
 Vector *dijkstra_solve(Problem *P) {
