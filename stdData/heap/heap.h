@@ -36,7 +36,7 @@ void heap_print(Heap *heap, void(*print_func)(data_type));
 
 void heapNode_print(data_type data);
 
-void heapNode_destroy(data_type data);
+void heapNode_destroy(data_type data, void(*free_func)(data_type));
 
 data_type getHeapNodeData(HeapNode *HN);
 

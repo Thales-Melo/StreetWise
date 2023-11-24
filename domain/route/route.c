@@ -13,7 +13,8 @@ Route *route_create(City *city, int city_num, float distance) {
 
 void route_destroy(data_type R) {
     Route *r = (Route*)R;
-    free(r->city);
+    // free(r->city);
+    // printf ("CHEGOU AQUI - route\n");
     free(r);
 }
 

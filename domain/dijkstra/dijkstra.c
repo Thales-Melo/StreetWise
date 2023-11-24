@@ -36,7 +36,7 @@ Vector *dijkstra_solve(Problem *P) {
     Vector *parents = vector_construct();
     // inicializar o vetor parents com 0
     for (int i=0; i<P->graph->size; i++) {
-        vector_push_back(parents, parent_construct(0, 0, 0));
+        vector_push_back(parents, NULL);
     }
 
     P->graph->metropolis[0]->distance_to_start = 0;
@@ -102,8 +102,13 @@ Vector *dijkstra_solve(Problem *P) {
                 heap_push(NotVisited, parent_construct(C->id, neighboor->city->id, C->distance_to_start + neighboor->distance), neighboor->city->distance_to_start);
                 // neighboor->city->distance_to_start = original_distance;
             // }
+
+            // Liberar memória alocada dentro do loop
+            heapNode_destroy(aux, route_destroy);
         }
 
+        // Liberar memória alocada dentro do loop
+        heapNode_destroy(HN, parent_destroy);
 
     }
 
@@ -137,11 +142,15 @@ Vector *dijkstra_solve(Problem *P) {
         // path_print(path);
         vector_push_back(paths, path);
 
+        // Liberar memória do par
 
         // printf ("\n\n|||||||||||||||\n\n");
     }
 
     vector_destroy(parents, parent_destroy);
-    
+    // free(origin);
+    heap_destroy(NotVisited, parent_destroy);
+    free(Visited);
+
     return paths;
 }

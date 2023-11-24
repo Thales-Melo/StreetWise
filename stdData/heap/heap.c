@@ -148,8 +148,11 @@ void heapNode_print(data_type data) {
     printf("%s - %.2f\n", (char*)aux->data, aux->priority);
 }
 
-void heapNode_destroy(data_type data) {
+void heapNode_destroy(data_type data, void(*free_func)(data_type)) {
     HeapNode *aux = (HeapNode*)data;
+    if (free_func != NULL) {
+        free_func(aux->data);
+    }
     free(aux);
 }
 
