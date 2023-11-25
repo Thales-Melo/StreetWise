@@ -25,3 +25,8 @@ void view_print_file_nonexistent(char *filename) {
 void view_print_no_connections(char *filename) {
   printf ("ARQUIVO \"%s\" NÃO POSSUI CONEXÕES\n", filename);
 }
+
+
+void view_print_file_empty(char *file) {
+    printf("ARQUIVO \"%s\" VAZIO\n", file);
+}

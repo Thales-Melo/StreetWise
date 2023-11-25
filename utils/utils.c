@@ -97,15 +97,13 @@ int floatcmp(data_type A, data_type B) {
   return 0;
 }
 
-void view_print_file_empty(char *file) {
-    printf("ARQUIVO \"%s\" VAZIO\n", file);
-}
 
 int invalid_file(FILE *F, char *file_name) {
     if (F == NULL) {
       view_print_file_nonexistent(file_name);
       return TRUE;
     }
+
     int c = getc(F);
     if (c == EOF || c == '0') {
         view_print_file_empty(file_name);
@@ -124,8 +122,25 @@ int invalid_file(FILE *F, char *file_name) {
             ungetc(t, F);
             ungetc(c, F);
         }
-        
     }
 
+    int a = getc(F);
+    if (a != EOF) {
+      int k = getc(F);
+      if (k == '\n') {
+        int j = getc(F);
+        if (j == EOF) {
+          view_print_no_connections(file_name);
+          fclose(F);
+          return TRUE;
+        }
+        else {
+          ungetc(j, F);
+        }
+      }
+      ungetc(k, F);
+    }
+    ungetc(a, F);
+  
     return FALSE;
 }
