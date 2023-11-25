@@ -6,7 +6,7 @@
 
 typedef struct {
     // Aqui na struct problem, eu tenho um grafo porque o problema é um grafo
-    // Mas se o problema fosse X, eu teria um X aqui]
+    // Mas se o problema fosse X, eu teria um X aqui
     // Uma vez que "Problema" é um conceito abstrato, logo, pode ser qualquer coisa
     Graph *graph;
 } Problem;
