@@ -1,0 +1,1 @@
+ARQUIVO "file/inputs/empty_in.txt" VAZIO

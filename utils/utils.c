@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include "../view/view.h"
 
 void print_int(data_type data) {
   int d = *(int*)data;
@@ -95,4 +95,37 @@ int floatcmp(data_type A, data_type B) {
     return -1;
   }
   return 0;
+}
+
+void view_print_file_empty(char *file) {
+    printf("ARQUIVO \"%s\" VAZIO\n", file);
+}
+
+int invalid_file(FILE *F, char *file_name) {
+    if (F == NULL) {
+      view_print_file_nonexistent(file_name);
+      return TRUE;
+    }
+    int c = getc(F);
+    if (c == EOF || c == '0') {
+        view_print_file_empty(file_name);
+        fclose(F);
+        return TRUE;
+    }
+    else {
+        // ungetc(c, F);
+        int t = getc(F);
+        if (t == EOF) {
+            view_print_no_connections(file_name);
+            fclose(F);
+            return TRUE;
+        }
+        else {
+            ungetc(t, F);
+            ungetc(c, F);
+        }
+        
+    }
+
+    return FALSE;
 }

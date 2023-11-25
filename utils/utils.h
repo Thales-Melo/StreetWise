@@ -2,10 +2,12 @@
 #define _UTILS_H_
 
 
+#include <stdio.h>
+
+
 #define TRUE 1
 #define FALSE 0
 #define STD_FILENAME_SIZE 100
-
 typedef void* data_type;
 
 
@@ -32,6 +34,10 @@ void freeArray(char **lista, int tam);
 int intcmp(data_type A, data_type B);
 
 int floatcmp(data_type A, data_type B);
+
+void view_print_file_empty(char *file);
+
+int invalid_file(FILE *F, char *file_name);
 
 
 #endif

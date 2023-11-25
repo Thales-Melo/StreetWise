@@ -7,8 +7,9 @@
 
 Problem *problem_data_read(char *file) {
     FILE *F = fopen(file, "r");
-    if (F == NULL) {
-        view_print_file_nonexistent(file);
+    
+    // Verificar entradas que possivelmente quebram o programa
+    if (invalid_file(F, file)) {
         return NULL;
     }
 

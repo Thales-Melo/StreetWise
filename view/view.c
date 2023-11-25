@@ -18,6 +18,10 @@ void view_print_file_nonexistent(char *filename) {
     // msg_erro[0] = '\0';
     // sprintf (msg_erro, "\nArquivo \"%s\" não existe", filename);
     // printAmarelo(msg_erro);
-    printf ("\nArquivo \"%s\" não existe\n\n", filename);
+    printf ("ARQUIVO \"%s\" NÃO EXISTE\n", filename);
 }
 
+
+void view_print_no_connections(char *filename) {
+  printf ("ARQUIVO \"%s\" NÃO POSSUI CONEXÕES\n", filename);
+}

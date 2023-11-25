@@ -1,0 +1,22 @@
+valgrind ./main file/inputs/arthur_in.txt > file/outputs/reality/arthur_out.txt
+
+
+valgrind ./main file/inputs/empty_in.txt > file/outputs/reality/empty_out.txt
+
+
+valgrind ./main file/inputs/input.txt > file/outputs/reality/output.txt
+
+
+valgrind ./main file/inputs/no_connections_in.txt > file/outputs/reality/no_connections_out.txt
+
+
+valgrind ./main file/inputs/one_connection_in.txt > file/outputs/reality/one_connection_out.txt
+
+
+valgrind ./main file/inputs/one_node_in.txt > file/outputs/reality/one_node_out.txt
+
+
+valgrind ./main file/inputs/zero_nodes_in.txt > file/outputs/reality/zero_nodes_out.txt
+
+
+valgrind ./main file/inputs/NAO_EXISTE_in.txt > file/outputs/reality/NAO_EXISTE_out.txt

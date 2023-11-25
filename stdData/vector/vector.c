@@ -26,7 +26,6 @@ Vector *vector_construct() {
 
 void vector_destroy(Vector *v, void(*free_func)(data_type)) {
     if (free_func == NULL) {
-        // printf("vector_destroy: free_func is NULL\n");
         free(v->data);
         free(v);
         return;
