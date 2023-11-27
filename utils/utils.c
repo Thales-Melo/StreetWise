@@ -98,24 +98,25 @@ int floatcmp(data_type A, data_type B) {
 }
 
 
-int invalid_file(FILE *F, char *file_name) {
+int nonexistent_file(FILE *F, char *file_name) {
     if (F == NULL) {
       view_print_file_nonexistent(file_name);
       return TRUE;
     }
+    return FALSE;
+}
 
+
+int empty_or_no_connections(FILE *F, char *file_name) {
     int c = getc(F);
     if (c == EOF || c == '0') {
         view_print_file_empty(file_name);
-        fclose(F);
         return TRUE;
     }
     else {
-        // ungetc(c, F);
         int t = getc(F);
         if (t == EOF) {
             view_print_no_connections(file_name);
-            fclose(F);
             return TRUE;
         }
         else {
@@ -123,15 +124,18 @@ int invalid_file(FILE *F, char *file_name) {
             ungetc(c, F);
         }
     }
+    return FALSE;
+}
 
+
+int no_connections_file(FILE *F, char *file_name) {
     int a = getc(F);
     if (a != EOF) {
       int k = getc(F);
       if (k == '\n') {
         int j = getc(F);
-        if (j == EOF) {
+        if (j == EOF || j == '\n') {
           view_print_no_connections(file_name);
-          fclose(F);
           return TRUE;
         }
         else {
@@ -141,6 +145,24 @@ int invalid_file(FILE *F, char *file_name) {
       ungetc(k, F);
     }
     ungetc(a, F);
+    return FALSE;
+}
+
+
+int invalid_file(FILE *F, char *file_name) {
+    if (nonexistent_file(F, file_name)) {
+      return TRUE;
+    }
+
+    if (empty_or_no_connections(F, file_name)) {
+      fclose(F);
+      return TRUE;
+    }
+
+    if (no_connections_file(F, file_name)) {
+      fclose(F);
+      return TRUE;
+    }
   
     return FALSE;
 }
