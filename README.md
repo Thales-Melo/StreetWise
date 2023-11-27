@@ -1,8 +1,8 @@
-## StreetWise
+# StreetWise
 Código em C para encontrar o caminho mais curto entre cidades
 
 
-# TADs criados
+## TADs criados
 
 • City --> Representa os nós do grafo (Imagine o grafo como sendo um conjunto de cidades conectadas por rodovias, etc...) (Escolhido também para evitar conflito de nomes, uma vez que a Lista Duplamente Encadeada já possui "nodes")
 
@@ -19,5 +19,5 @@ Código em C para encontrar o caminho mais curto entre cidades
 • Problem --> Problema a ser resolvido
 
 
-# Estruturas de Dados
+## Estruturas de Dados
 Para resolver o problema, utilizei HEAP (Fila de prioridade) para manipular os e iterar sobre os nós do grafo, além de uma LISTA DUPLAMENTE ENCADEADA para armazenar as rotas (Motivo explicado no .h)
