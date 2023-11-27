@@ -1,6 +1,6 @@
 # StreetWise
 Código em C para encontrar o caminho mais curto entre cidades
-
+Desenvolvedor: Thales Melo da Penha
 
 ## TADs criados
 
